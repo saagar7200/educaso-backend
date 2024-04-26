@@ -3,6 +3,8 @@ import { requestValidator } from "../middlewares/requestValidation.middleware";
 import { UserController } from "../controller/user_controller";
 import express from "express";
 import { RegisterInput } from "../validators/user/user.validator";
+// import mediaService from "services/media/media.service";
+import { Upload } from "../middlewares/fileUpload.middleware";
 const router = express.Router();
 
 // import  { createUser, loginUser, adminLogin, getAllUsers, getSpecificUser,
@@ -14,7 +16,8 @@ const controller = new UserController();
 
 router.post(
   "/register",
-  // requestValidator(RegisterInput),
+  Upload(),
+  requestValidator(RegisterInput),
   controller.createUser
 );
 // router.post('/verify/mobile-otp', verifyMobileOtp);

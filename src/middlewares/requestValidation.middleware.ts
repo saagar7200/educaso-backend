@@ -53,7 +53,7 @@ const getValidationMessage = async (
     } else {
       if (err.constraints) {
         Object.values(err.constraints).forEach((value) => {
-          message.push(value);
+          message.unshift(value);
         });
       }
       return;
@@ -73,20 +73,19 @@ export const requestValidator = <T extends object>(
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       // Convert request body to DTO instance
-
+      console.log("validation body", req.body);
       const dtoInstance = plainToClass(dtoClass, req.body);
       let validationMessages: string[] = [];
 
       // Validate DTO instance
       const errors = await validate(dtoInstance);
-      console.log("validation errors", validationMessages, errors);
-      if (errors.length > 0) {
-        const messages = await getValidationMessage(errors, validationMessages);
-
+      const messages = await getValidationMessage(errors, validationMessages);
+      if (messages.length > 0) {
+        console.log("validation errors", errors, messages);
         return res.status(400).json({
           statusCode: 400,
-          error: messages[1],
-          message: messages[1],
+          error: messages[0],
+          message: validationMessages[0],
           status: STATUS.ERROR,
           success: STATUS.FAIL,
         });

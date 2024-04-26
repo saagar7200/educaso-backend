@@ -12,7 +12,7 @@ import {
 } from "class-validator";
 import { Gender } from "../../constants/enum";
 import { Role } from "../../constants/global";
-import { ImageUpload } from "../../validators/media/media.validator";
+import { MediaInput } from "../../validators/media/media.validator";
 // import { MediaInput } from "../../validators/media/media.validator";
 
 export class RegisterInput {
@@ -40,9 +40,9 @@ export class RegisterInput {
   @IsString()
   profession: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   // @ValidateNested({ each: true })
-  profileImage;
+  profileImage: MediaInput;
 }
 
 export class UserLoginInput {

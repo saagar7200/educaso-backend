@@ -3,7 +3,6 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { createdMessage, Message } from "../constants/message.constant";
-import AppError from "../utils/appError";
 import { RegisterInput } from "../validators/user/user.validator";
 import UserService from "../services/user/user.service";
 import asyncHandler from "express-async-handler";
@@ -18,24 +17,26 @@ export class UserController {
 
   createUser = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
-      console.log("data", req.files.file);
-      console.log("data", req.files.profileImage);
-      console.log("data");
-      const data: RegisterInput = req.body;
+      // console.log("data image", req.body.fileDetails);
+      console.log("user create", req.body);
+      const { profileImage, ...data }: RegisterInput = req.body;
       // const { file, type } = data.profileImage;
       const newUser = await this.userService.createUser(data);
 
-      if (req.files) {
+      if (profileImage) {
         const image = await this.mediaService.singleUpload(
-          req.files.file,
+          profileImage,
           MediaType.PROFILE_IMAGE
         );
         console.log("image", image);
+        newUser.profileImage = image;
       }
+
+      const user = await newUser.save();
 
       return res.status(StatusCodes.CREATED).json({
         message: createdMessage("User"),
-        data: newUser,
+        data: user,
       });
     }
   );

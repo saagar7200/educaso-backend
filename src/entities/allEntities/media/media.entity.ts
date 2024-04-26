@@ -35,12 +35,12 @@ export class Media extends Base {
 
   public path: string;
 
-  transferImageFromTempTOUploadFolder(id: string, type: string) {
+  transferImageFromTempTOUploadFolder(type: string) {
     const TEMP_FOLDER_PATH = path.join(getTempFolderPath(), this.name);
 
     const UPLOAD_FOLDER_PATH = path.join(
       getUploadFolderPath(),
-      id.toString(),
+
       type.toLowerCase()
     );
     !fs.existsSync(UPLOAD_FOLDER_PATH) &&
@@ -49,9 +49,10 @@ export class Media extends Base {
     fs.renameSync(TEMP_FOLDER_PATH, path.join(UPLOAD_FOLDER_PATH, this.name));
   }
 
-  // @AfterLoad()
-  // async loadImagePath() {
-  //     this.path = `${process.env.BASE_URL!}/${this.type.toLowerCase()}/${this.id
-  //         }/${this.name}`;
-  // }
+  @AfterLoad()
+  async loadImagePath() {
+    this.path = `${process.env.BASE_URL!}/${this.type.toLowerCase()}/${
+      this.name
+    }`;
+  }
 }

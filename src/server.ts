@@ -10,7 +10,7 @@ import { errorHandler, notFound } from "./middlewares/error_handler";
 import dataSource from "./config/database.config";
 import { getUploadFolderPath } from "./utils/path.util";
 import authRouter from "./routes/auth_routes";
-import AppError from "./utils/appError";
+import quizTypeRoute from "./routes/quiztype.route";
 import fileUpload from "express-fileupload";
 
 const app = express();
@@ -50,7 +50,8 @@ async function bootStrap() {
   // static path for uploaded images
   app.use(express.static(getUploadFolderPath()));
 
-  app.use("/api/user", authRouter);
+  app.use("/api/v1/user", authRouter);
+  app.use("/api/v1/exam-type", quizTypeRoute);
   // app.use("/api/quiz/category", quizCategoryRouter);
   // app.use("/api/quiz", quizRouter);
   // app.use("/api/question", questionRouter);

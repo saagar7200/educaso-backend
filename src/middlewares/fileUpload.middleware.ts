@@ -37,11 +37,12 @@ export const Upload = <T extends object>(): RequestHandlerParams<
     try {
       // Ensure the directory exists
       !fs.existsSync(path.join(getTempFolderPath())) &&
-        fs.mkdirSync(path.join(getTempFolderPath()), {
+        mkdir(path.join(getTempFolderPath()), {
           recursive: true,
         });
       // await mkdir(basePath, { recursive: true });
 
+      console.log("Creating temporary", req.files);
       // Process all uploaded files
       if (req.files) {
         for (const field of Object.keys(req.files)) {
@@ -67,13 +68,13 @@ export const Upload = <T extends object>(): RequestHandlerParams<
                 req.body[field] = [];
               }
               req.body[field].push({
-                name: file.name,
+                name: modifyFileName,
                 // type: MediaType.PROFILE_IMAGE,
                 mimeType: file.mimetype,
               });
             } else {
               req.body[field] = {
-                name: file.name,
+                name: modifyFileName,
                 // type: MediaType.PROFILE_IMAGE,
                 mimeType: file.mimetype,
               };

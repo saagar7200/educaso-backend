@@ -29,7 +29,7 @@ export class UserController {
           MediaType.PROFILE_IMAGE
         );
         console.log("image", image);
-        newUser.profileImage = image;
+        newUser.profile_image = image;
       }
 
       const user = await newUser.save();

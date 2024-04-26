@@ -29,9 +29,6 @@ export class UserEntity extends Base {
   @Column()
   phoneNumber: string;
 
-  // @Column()
-  // currentCity: string;
-
   @Column()
   profession: string;
 
@@ -57,9 +54,13 @@ export class UserEntity extends Base {
   })
   confirmEmailToken!: string | null;
 
-  @OneToOne((type) => Media, (media) => media.user, { nullable: true })
+  @OneToOne((type) => Media, (media) => media.user, {
+    nullable: true,
+    cascade: true,
+    onDelete: "CASCADE",
+  })
   @JoinColumn()
-  profileImage: Media;
+  profile_image: Media;
 
   // @OneToMany(() => ArticleEntity, (article) => article.owner, { cascade: true })
   // article: ArticleEntity;

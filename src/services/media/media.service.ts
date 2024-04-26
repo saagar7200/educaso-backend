@@ -14,6 +14,12 @@ class MediaService {
   ) {}
 
   async singleUpload(file: MediaInput, type: MediaType) {
+
+    console.log(
+      "check for file",
+      existsSync(path.join(TEMP_FOLDER_PATH, file.name)),
+      file.name
+    );
     if (!existsSync(path.join(TEMP_FOLDER_PATH, file.name))) {
       throw AppError.BadRequest(
         "Sorry image file does not exists.Upload an image first."

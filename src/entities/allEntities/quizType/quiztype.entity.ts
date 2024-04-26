@@ -10,8 +10,8 @@ export class QuizType extends Base {
   @Column({ name: "name" })
   name: string;
 
-  @Column({ name: "description", nullable: true })
-  description: string;
+  @Column({ name: "description", type: "text", nullable: true })
+  description: string | null;
 
   @ManyToMany((type) => QuestionEntity, (question) => question.quiz_type)
   questions: QuestionEntity[];

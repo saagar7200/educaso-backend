@@ -9,13 +9,20 @@
     "rootDir": "./src/",
     "strict": true,
     "noImplicitAny": false,
+
     "baseUrl": "./src/",
+    // "typeRoots": ["node_modules/@types","*/@types"],
+
+    "paths": {
+      "*": ["node_modules"]
+    },
     "esModuleInterop": true,
     "skipLibCheck": true,
     "strictPropertyInitialization": false,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
   },
+
   "include": ["src/**/*.ts", "src/config.ts"],
   "exclude": ["movies", "**/*.legacy.ts", "node_modules/**/*.ts"]
 }

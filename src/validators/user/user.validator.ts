@@ -40,7 +40,7 @@ export class RegisterInput {
   @IsString()
   profession: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   // @ValidateNested({ each: true })
   profileImage: MediaInput;
 }

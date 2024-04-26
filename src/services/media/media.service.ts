@@ -7,7 +7,7 @@ import { MediaInput } from "../../validators/media/media.validator";
 import dataSource from "../../config/database.config";
 const TEMP_FOLDER_PATH = getTempFolderPath();
 import { existsSync } from "fs";
-import { Message } from "constants/message.constant";
+import { Message } from "../../constants/message.constant";
 class MediaService {
   constructor(
     private readonly mediaRepository = dataSource.getRepository(Media)

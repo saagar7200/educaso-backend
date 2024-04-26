@@ -41,3 +41,11 @@ testem.log
 Thumbs.db
 
 .env
+
+node_modules
+node_modules
+public
+.env
+pnpm-lock.yaml
+build/
+dist/

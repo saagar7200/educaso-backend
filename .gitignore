@@ -44,7 +44,7 @@ Thumbs.db
 
 node_modules
 node_modules
-public
+public/
 .env
 pnpm-lock.yaml
 build/

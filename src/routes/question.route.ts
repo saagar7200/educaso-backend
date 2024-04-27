@@ -1,14 +1,14 @@
-import { ChapterInput } from "../validators/chapter/chapter.validator";
-import { ChapterController } from "../controller/chapter.controller";
+import { QuestionInput } from "../validators/question/question.validator";
+import { QuestionController } from "../controller/question.controller";
 import { requestValidator } from "../middlewares/requestValidation.middleware";
 import express from "express";
 const router = express.Router();
 
-// const controller = new ChapterController();
-// router.get("/", controller.getAll);
-// router.get("/:id", controller.getOneById);
-// router.delete("/:id", controller.delete);
-// router.put("/:id", requestValidator(ChapterInput), controller.update);
-// router.post("/", requestValidator(ChapterInput), controller.create);
+const controller = new QuestionController();
+router.get("/", controller.getAll);
+router.get("/:id", controller.getOneById);
+router.delete("/:id", controller.delete);
+router.put("/:id", requestValidator(QuestionInput), controller.update);
+router.post("/", requestValidator(QuestionInput), controller.create);
 
 export default router;

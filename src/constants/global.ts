@@ -26,3 +26,16 @@ export enum Environment {
   PRODUCTION = "PRODUCTION",
   TEST = "TEST",
 }
+
+export enum QUESTION_TYPE {
+  MULTIPLE_CHOICE = "MULTIPLE_CHOICE",
+  TRUE_FALSE = "TRUE_FALSE",
+  SUBJECTIVE = "SUBJECTIVE",
+  OBJECTIVE = "OBJECTIVE",
+}
+
+export enum QUESTION_DIFFICULTY_LEVEL {
+  EASY = "Easy",
+  MEDIUM = "Medium",
+  HARD = "Hard",
+}

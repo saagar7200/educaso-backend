@@ -3,6 +3,10 @@ import { Column, Entity, JoinTable, ManyToOne, ManyToMany } from "typeorm";
 import { QuizType } from "../quizType/quiztype.entity";
 import { SubjectEntity } from "../subject/subject.entity";
 import { ChapterEntity } from "../chapter/chapter.entity";
+import {
+  QUESTION_DIFFICULTY_LEVEL,
+  QUESTION_TYPE,
+} from "../../../constants/global";
 @Entity({ name: "question" })
 export class QuestionEntity extends Base {
   @Column()
@@ -10,8 +14,8 @@ export class QuestionEntity extends Base {
 
   @Column({
     type: "enum",
-    enum: ["MULTIPLE_CHOICE", "TRUE-FALSE", "SUBJECTIVE", "OBJECTIVE"],
-    default: "MULTIPLE_CHOICE",
+    enum: QUESTION_TYPE,
+    default: QUESTION_TYPE.MULTIPLE_CHOICE,
   })
   type: string; // Type of the question
 
@@ -29,13 +33,13 @@ export class QuestionEntity extends Base {
 
   @Column({
     type: "enum",
-    enum: ["Easy", "Medium", "Hard"],
-    default: "Easy",
+    enum: QUESTION_DIFFICULTY_LEVEL,
+    default: QUESTION_DIFFICULTY_LEVEL.EASY,
     name: "difficulty_level",
   })
   difficulty_level: string;
 
-  @ManyToOne(() => QuizType, (quizType) => quizType.questions)
+  @ManyToMany(() => QuizType, (quizType) => quizType.questions)
   quiz_type: QuizType[];
 
   @ManyToMany(() => SubjectEntity, (subject) => subject.questions)

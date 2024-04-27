@@ -4,6 +4,7 @@ import {
   Column,
   OneToMany,
   ManyToMany,
+  JoinTable,
 } from "typeorm";
 import { ChapterEntity } from "../chapter/chapter.entity";
 import { QuizSubTypeEntity } from "../quizSubType/quizsubtype.entity";
@@ -27,4 +28,8 @@ export class SubjectEntity extends Base {
 
   @ManyToMany(() => QuestionEntity, (question) => question.subjects) // This will use the join table configured in Question
   questions: QuestionEntity[];
+
+  @ManyToMany((type) => QuizSubTypeEntity, (sub) => sub.subjects)
+  @JoinTable()
+  quiz_sub_type: QuizSubTypeEntity[];
 }

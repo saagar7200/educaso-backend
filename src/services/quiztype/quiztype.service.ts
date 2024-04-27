@@ -6,6 +6,7 @@ import BcryptService from "../../utils/bcrypt.service";
 import { QuizTypeInput } from "../../validators/quiztype/quiztype.valodator";
 import { QuizType } from "../../entities/allEntities/quizType/quiztype.entity";
 import { notFoundMessage } from "../../constants/message.constant";
+import { In } from "typeorm";
 
 class QuizTypeService {
   constructor(
@@ -21,6 +22,7 @@ class QuizTypeService {
           chapter: false, // Load chapter related to questions if required
         },
         quiz_type_subjects: true,
+        quiz_sub_types: true,
       },
       order: {
         createdAt: "DESC",
@@ -42,6 +44,7 @@ class QuizTypeService {
       relations: {
         questions: true,
         quiz_type_subjects: true,
+        quiz_sub_types: true,
       },
     });
 
@@ -49,6 +52,22 @@ class QuizTypeService {
       throw AppError.NotFound(notFoundMessage("exam Type"));
     }
     console.log("created service", quiztype);
+
+    return quiztype;
+  }
+  async getByIds(id: string[]) {
+    const quiztype = await this.quizTypeRepository.find({
+      where: {
+        id: In(id),
+      },
+      relations: {
+        quiz_sub_types: true,
+      },
+    });
+
+    if (!quiztype) {
+      throw AppError.NotFound(notFoundMessage("exam Type"));
+    }
 
     return quiztype;
   }

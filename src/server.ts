@@ -11,6 +11,8 @@ import dataSource from "./config/database.config";
 import { getUploadFolderPath } from "./utils/path.util";
 import authRouter from "./routes/auth_routes";
 import quizTypeRoute from "./routes/quiztype.route";
+import quizsubCategoryRouter from "./routes/quiz_sub_type.route";
+
 import fileUpload from "express-fileupload";
 
 const app = express();
@@ -51,7 +53,8 @@ async function bootStrap() {
   app.use(express.static(getUploadFolderPath()));
 
   app.use("/api/v1/user", authRouter);
-  app.use("/api/v1/exam-type", quizTypeRoute);
+  app.use("/api/v1/exam/category", quizTypeRoute);
+  app.use("/api/v1/exam/sub_category", quizsubCategoryRouter);
   // app.use("/api/quiz/category", quizCategoryRouter);
   // app.use("/api/quiz", quizRouter);
   // app.use("/api/question", questionRouter);
@@ -67,18 +70,11 @@ async function bootStrap() {
     console.log(`Server is running at ${URL}`);
   });
 
-  // process.on("unhandledRejection", (err) => {
-  //   console.log(`Error: ${err.message}`);
-  //   console.log(`Shutting down the server due to Unhandled Promise Rejection`);
-
-  //   httpServer.close(() => {
-  //     process.exit(1);
-  //   });
-  // });
-
   process.on("unhandledRejection", (reason, promise) => {
     console.error("Unhandled Rejection at:", promise, "reason:", reason);
-    // Handle the error, or log it, or throw it...
+    httpServer.close(() => {
+      process.exit(1);
+    });
   });
 }
 

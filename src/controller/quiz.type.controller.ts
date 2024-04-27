@@ -21,6 +21,7 @@ export class QuizTypeController {
       const quizTypes = await this.quizTypeService.getAll();
       return res.status(StatusCodes.OK).json({
         message: fetchedMessage("Exam type "),
+        success: true,
         data: quizTypes,
       });
     }
@@ -36,6 +37,7 @@ export class QuizTypeController {
       const quizType = await this.quizTypeService.getById(id);
       return res.status(StatusCodes.OK).json({
         message: fetchedMessage("Exam type "),
+        success: true,
         data: quizType,
       });
     }
@@ -49,6 +51,7 @@ export class QuizTypeController {
 
       return res.status(StatusCodes.CREATED).json({
         message: createdMessage("Quiz Type"),
+        success: true,
         data: newQuizType,
       });
     }
@@ -68,6 +71,7 @@ export class QuizTypeController {
       const updatedType = await this.quizTypeService.update(data, id);
       return res.status(StatusCodes.CREATED).json({
         message: updatedMessage("Exam type"),
+        success: true,
         data: updatedType,
       });
     }
@@ -83,6 +87,7 @@ export class QuizTypeController {
       const quizType = await this.quizTypeService.delete(id);
       return res.status(StatusCodes.OK).json({
         message: deletedMessage("Exam type "),
+        success: true,
         data: quizType,
       });
     }

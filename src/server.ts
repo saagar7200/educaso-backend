@@ -12,6 +12,9 @@ import { getUploadFolderPath } from "./utils/path.util";
 import authRouter from "./routes/auth_routes";
 import quizTypeRoute from "./routes/quiztype.route";
 import quizsubCategoryRouter from "./routes/quiz_sub_type.route";
+import subjectRoute from "./routes/subject.route";
+import chapterRoute from "./routes/chapter.route";
+import questionRoute from "./routes/question.route";
 
 import fileUpload from "express-fileupload";
 
@@ -55,6 +58,9 @@ async function bootStrap() {
   app.use("/api/v1/user", authRouter);
   app.use("/api/v1/exam/category", quizTypeRoute);
   app.use("/api/v1/exam/sub_category", quizsubCategoryRouter);
+  app.use("/api/v1/subject", subjectRoute);
+  app.use("/api/v1/chapter", chapterRoute);
+  app.use("/api/v1/question", questionRoute);
   // app.use("/api/quiz/category", quizCategoryRouter);
   // app.use("/api/quiz", quizRouter);
   // app.use("/api/question", questionRouter);

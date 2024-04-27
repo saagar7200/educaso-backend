@@ -36,6 +36,7 @@ export class UserController {
 
       return res.status(StatusCodes.CREATED).json({
         message: createdMessage("User"),
+        success: true,
         data: user,
       });
     }

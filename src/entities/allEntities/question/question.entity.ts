@@ -42,6 +42,6 @@ export class QuestionEntity extends Base {
   @JoinTable() // Specify the join table here
   subjects: SubjectEntity[];
 
-  @ManyToOne(() => ChapterEntity, (chapter) => chapter.question)
+  @ManyToOne(() => ChapterEntity, (chapter) => chapter.questions)
   chapter: ChapterEntity;
 }

@@ -11,6 +11,7 @@ import {
 import { Base } from "../../../entities/base/base.entity";
 import { QuizType } from "../quizType/quiztype.entity";
 import { SubjectEntity } from "../subject/subject.entity";
+import { QuizTypeSubjectEntity } from "../quizTpeSubject/quiztypesubjects.entity";
 
 @Entity({
   name: "quiz_sub_category",
@@ -46,4 +47,10 @@ export class QuizSubTypeEntity extends Base {
   @ManyToMany((type) => SubjectEntity, (sub) => sub.quiz_sub_type)
   @JoinTable()
   subjects: SubjectEntity[];
+
+  @OneToMany(
+    () => QuizTypeSubjectEntity,
+    (quizTypeSubject) => quizTypeSubject.quiz_sub_type
+  )
+  quiz_type_subjects: QuizTypeSubjectEntity[];
 }

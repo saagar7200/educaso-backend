@@ -17,6 +17,9 @@ export class SubjectEntity extends Base {
   @Column()
   name: string;
 
+  @Column({ nullable: true, type: "text" })
+  description?: string | null;
+
   @OneToMany(() => ChapterEntity, (chapter) => chapter.subject)
   chapters: ChapterEntity[];
 

@@ -5,6 +5,7 @@ import { notFoundMessage } from "../../constants/message.constant";
 import { QuizSubTypeEntity } from "../../entities/allEntities/quizSubType/quizsubtype.entity";
 import { QuizSubTypeInput } from "../../validators/quizsubtype/quizsubtype.validator";
 import asyncHandler from "express-async-handler";
+import { In } from "typeorm";
 
 class QuizSubTypeService {
   constructor(
@@ -35,6 +36,27 @@ class QuizSubTypeService {
     const quizsubtype = await this.quizSubTypeRepository.findOne({
       where: {
         id: id,
+      },
+      relations: {
+        subjects: true,
+        quiz_type: true,
+      },
+    });
+
+    if (!quizsubtype) {
+      throw AppError.NotFound(notFoundMessage("exam Type"));
+    }
+    console.log("get one quizsubtype service", quizsubtype);
+
+    return quizsubtype;
+  }
+
+  async getByIds(id: string[]) {
+    console.log("quiz sub type service", id);
+
+    const quizsubtype = await this.quizSubTypeRepository.find({
+      where: {
+        id: In(id),
       },
       relations: {
         subjects: true,

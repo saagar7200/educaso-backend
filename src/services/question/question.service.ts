@@ -1,149 +1,152 @@
-import { UserEntity } from "../../entities/allEntities/user/user.entity";
 import dataSource from "../../config/database.config";
-import { RegisterInput } from "../../validators/user/user.validator";
 import AppError from "../../utils/appError";
-import BcryptService from "../../utils/bcrypt.service";
 import { notFoundMessage } from "../../constants/message.constant";
 import { In } from "typeorm";
 import { SubjectEntity } from "../../entities/allEntities/subject/subject.entity";
 import { SubjectInput } from "../../validators/subject/subject.validator";
+import { QuestionEntity } from "../../entities/allEntities/question/question.entity";
+import { QuestionInput } from "../../validators/question/question.validator";
 
-class SubjectService {
+class QuestionService {
   constructor(
-    private readonly subjectRepository = dataSource.getRepository(SubjectEntity)
+    private readonly questionRepository = dataSource.getRepository(
+      QuestionEntity
+    )
   ) {}
 
   async getAll() {
-    const subjects = await this.subjectRepository.find({
+    const questions = await this.questionRepository.find({
       relations: {
-        questions: {
-          quiz_type: false, // Assuming you want to load back-reference to subject if necessary
-          subjects: false, // Load subjects related to questions
-          chapter: false, // Load chapter related to questions if required
-        },
-        quiz_type_subjects: true,
-        chapters: true,
-        quiz_sub_type: true,
+        chapter: true,
+        subjects: true,
+        quiz_type: true,
       },
       order: {
         createdAt: "DESC",
       },
     });
 
-    return subjects;
+    return questions;
   }
 
   async getById(id: string) {
-    const subject = await this.subjectRepository.findOne({
+    const question = await this.questionRepository.findOne({
       where: {
         id: id,
       },
       relations: {
-        questions: true,
-        quiz_type_subjects: true,
-        chapters: true,
-        quiz_sub_type: true,
+        chapter: true,
+        subjects: true,
+        quiz_type: true,
       },
     });
 
-    if (!subject) {
+    if (!question) {
       throw AppError.NotFound(notFoundMessage("exam Type"));
     }
-    console.log("created service", subject);
+    console.log("created service", question);
 
-    return subject;
+    return question;
   }
   async getByIds(id: string[]) {
-    const subjects = await this.subjectRepository.find({
+    const questions = await this.questionRepository.find({
       where: {
         id: In(id),
       },
       relations: {
-        questions: true,
-        quiz_type_subjects: true,
-        chapters: true,
-        quiz_sub_type: true,
+        chapter: true,
+        subjects: true,
+        quiz_type: true,
       },
     });
 
-    if (!subjects) {
+    if (!questions) {
       throw AppError.NotFound(notFoundMessage("exam Type"));
     }
 
-    return subjects;
+    return questions;
   }
 
-  async create(data: SubjectInput) {
+  async create(data: QuestionInput) {
     console.log("subject service", data);
 
-    const isSubExists = await this.subjectRepository.findOne({
+    const isquestionExists = await this.questionRepository.findOne({
       where: {
-        name: data.name,
+        text: data.text,
       },
     });
 
-    if (isSubExists) {
-      throw AppError.BadRequest(`Subject already exist with name ${data.name}`);
+    if (isquestionExists) {
+      throw AppError.BadRequest(`Subject already exist with name ${data.text}`);
     }
 
-    const newSubject = new SubjectEntity();
-    newSubject.name = data.name;
-    newSubject.description = data.description ?? null;
-    // const otp = generateRandomOTP();
-    // subject.confirmEmailToken = otp.toString();
+    const newQuestion = new QuestionEntity();
+    newQuestion.text = data.text;
+    newQuestion.description = data.description ?? null;
+    newQuestion.type = data.type;
+    newQuestion.choices = data.choices;
+    newQuestion.correct_answer = data.correct_answer;
+    newQuestion.explanation = data.explanation;
+    newQuestion.points = data.points;
+    newQuestion.difficulty_level = data.difficulty_level;
+    newQuestion.question_type = data.question_type;
 
-    const subject = await this.subjectRepository.save(newSubject);
-    console.log("created service", subject);
+    const question = await this.questionRepository.save(newQuestion);
+    console.log("question service", question);
 
-    return subject;
+    return question;
   }
 
-  async update(data: SubjectInput, id) {
+  async update(data: QuestionInput, id) {
     console.log("subject service", data);
 
-    const { name, description } = data;
+    const { text, description } = data;
 
-    const subject = await this.subjectRepository.findOne({
+    const question = await this.questionRepository.findOne({
       where: {
         id: id,
       },
     });
 
-    if (!subject) {
+    if (!question) {
       throw AppError.NotFound(notFoundMessage("Exam Type"));
     }
 
-    if (name !== subject.name) {
-      subject.name = name;
+    if (text !== question.text) {
+      question.text = text;
     }
-    if (description !== subject.description) {
-      subject.description = description;
+    if (description !== question.description) {
+      question.description = description;
     }
+    question.type = data.type;
+    question.choices = data.choices;
+    question.correct_answer = data.correct_answer;
+    question.explanation = data.explanation;
+    question.points = data.points;
+    question.difficulty_level = data.difficulty_level;
+    question.question_type = data.question_type;
 
-    console.log("created service", subject);
-    return await this.subjectRepository.save(subject);
+    console.log("created service", question);
+    return await this.questionRepository.save(question);
   }
 
   async delete(id: string) {
-    const subject = await this.subjectRepository.findOne({
+    const question = await this.questionRepository.findOne({
       where: {
         id,
       },
-      relations: {
-        questions: true,
-        quiz_type_subjects: true,
-      },
+      relations: {},
     });
 
-    if (!subject) {
-      throw AppError.NotFound(notFoundMessage("Subject"));
+    if (!question) {
+      throw AppError.NotFound(notFoundMessage("question"));
     }
 
-    const deleted = await this.subjectRepository.remove(subject);
-    console.log("Deleted", deleted);
+    const deleted = await this.questionRepository.remove(question);
+    console.log("Deleted question", deleted);
 
     return deleted;
   }
 }
 
-export default new SubjectService();
+export default new QuestionService();

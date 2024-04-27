@@ -6,18 +6,29 @@ import { ChapterEntity } from "../chapter/chapter.entity";
 import {
   QUESTION_DIFFICULTY_LEVEL,
   QUESTION_TYPE,
+  QUESTION_TYPE_MARKS,
 } from "../../../constants/global";
 @Entity({ name: "question" })
 export class QuestionEntity extends Base {
   @Column()
   text: string; // The actual question text
 
+  @Column({ type: "text", nullable: true })
+  description: string;
+
+  @Column({
+    type: "enum",
+    enum: QUESTION_TYPE_MARKS,
+    default: QUESTION_TYPE_MARKS.SHORT_QUESTION,
+  })
+  question_type: QUESTION_TYPE_MARKS;
+
   @Column({
     type: "enum",
     enum: QUESTION_TYPE,
     default: QUESTION_TYPE.MULTIPLE_CHOICE,
   })
-  type: string; // Type of the question
+  type: QUESTION_TYPE; // Type of the question
 
   @Column("simple-array", { nullable: true })
   choices: string[]; // For storing multiple choice options, applicable only for certain types
@@ -37,7 +48,7 @@ export class QuestionEntity extends Base {
     default: QUESTION_DIFFICULTY_LEVEL.EASY,
     name: "difficulty_level",
   })
-  difficulty_level: string;
+  difficulty_level: QUESTION_DIFFICULTY_LEVEL;
 
   @ManyToMany(() => QuizType, (quizType) => quizType.questions)
   quiz_type: QuizType[];

@@ -16,13 +16,14 @@ import {
 import {
   QUESTION_DIFFICULTY_LEVEL,
   QUESTION_TYPE,
+  QUESTION_TYPE_MARKS,
 } from "../../constants/global";
 
 export class QuestionInput {
   @IsNotEmpty()
   @IsString()
   @Length(2, 100) // Assuming names should be between 2 and 100 characters
-  name: string;
+  text: string;
 
   @IsOptional()
   @IsString()
@@ -53,6 +54,14 @@ export class QuestionInput {
     ).join(", ")}`,
   })
   type: QUESTION_TYPE;
+
+  @IsOptional()
+  @IsEnum(QUESTION_TYPE_MARKS, {
+    message: `Question type must be one of the following values: ${Object.values(
+      QUESTION_TYPE_MARKS
+    ).join(", ")}`,
+  })
+  question_type: QUESTION_TYPE_MARKS;
 
   @IsOptional()
   @IsEnum(QUESTION_DIFFICULTY_LEVEL, {

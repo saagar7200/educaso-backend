@@ -36,7 +36,6 @@ export class QuestionEntity extends Base {
   difficulty_level: string;
 
   @ManyToOne(() => QuizType, (quizType) => quizType.questions)
-  @JoinTable()
   quiz_type: QuizType[];
 
   @ManyToMany(() => SubjectEntity, (subject) => subject.questions)

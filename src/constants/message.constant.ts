@@ -17,7 +17,13 @@ export const deletedMessage = (title: string) => {
     return `${title} deleted successfully`;
 };
 
+export const fetchedMessage = (title: string) => {
+  return `${title} fetched successfully`;
+};
 
+export const notFoundMessage = (title: string) => {
+  return `${title} not found`;
+};
 
 export const Message = {
   APP_CREATED: (port: number) =>
@@ -26,7 +32,7 @@ export const Message = {
   DB_CONNECTION_SUCCESS: "Database connection successful",
   DB_CONNECTION_FAIL: "Database connection failed",
   DATA_FETCHED_SUCCESSFULLY: "Data fetched Successfully",
-
+  ID_NOT_PROVIDED: "Id was not provided",
   INTERNAL_SERVER_ERROR: "Something went wrong",
   ADMIN_RESOURCE: "This resource can only be accessed by ADMIN",
   EMAIL_NOT_SENT_ERROR: "Email not sent",

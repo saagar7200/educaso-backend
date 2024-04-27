@@ -10,11 +10,10 @@ const router = express.Router();
 
 const controller = new QuizTypeController();
 
-router.post(
-  "/",
-  Upload(),
-  requestValidator(QuizTypeInput),
-  controller.createQuizType
-);
+router.post("/", requestValidator(QuizTypeInput), controller.createQuizType);
+router.put("/:id", requestValidator(QuizTypeInput), controller.updateQuizType);
+router.delete("/:id", controller.deleteQuizType);
+router.get("/:id", controller.getOneById);
+router.get("/", controller.getAllQuizType);
 
 export default router;

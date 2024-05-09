@@ -46,12 +46,13 @@ export class RegisterInput {
 }
 
 export class UserLoginInput {
-  @IsNotEmpty()
+  @IsOptional()
   @IsEmail()
   email: string;
 
-  @IsNotEmpty()
-  fcmToken: string;
+  @IsOptional()
+  @IsString()
+  userName: string;
 
   @IsNotEmpty()
   @IsString()

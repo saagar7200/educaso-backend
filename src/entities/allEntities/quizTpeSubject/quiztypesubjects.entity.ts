@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { Base } from "../../../entities/base/base.entity";
 import { QuizType } from "../quizType/quiztype.entity";
 import { SubjectEntity } from "../subject/subject.entity";
+import { QuizSubTypeEntity } from "../quizSubType/quizsubtype.entity";
 
 @Entity()
 export class QuizTypeSubjectEntity extends Base {
@@ -28,4 +29,7 @@ export class QuizTypeSubjectEntity extends Base {
 
   @ManyToOne(() => SubjectEntity, (subject) => subject.quiz_type_subjects)
   subject: SubjectEntity;
+
+  @ManyToOne(() => QuizSubTypeEntity, (quizType) => quizType.quiz_type_subjects)
+  quiz_sub_type: QuizSubTypeEntity;
 }

@@ -13,6 +13,7 @@ import {
 
 import * as crypto from "crypto";
 import { Media } from "../media/media.entity";
+import { Role } from "../../../constants/global";
 
 @Entity({
   name: "user",
@@ -60,7 +61,14 @@ export class UserEntity extends Base {
     onDelete: "CASCADE",
   })
   @JoinColumn()
-  profile_image: Media;
+  profile_image?: Media | null;
+
+  @Column({
+    type: "enum",
+    enum: Role,
+    default: Role.USER,
+  })
+  role: Role;
 
   // @OneToMany(() => ArticleEntity, (article) => article.owner, { cascade: true })
   // article: ArticleEntity;

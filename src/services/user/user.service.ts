@@ -3,6 +3,8 @@ import dataSource from "../../config/database.config";
 import { RegisterInput } from "../../validators/user/user.validator";
 import AppError from "../../utils/appError";
 import BcryptService from "../../utils/bcrypt.service";
+import { notFoundMessage } from "../../constants/message.constant";
+import jwt from "jsonwebtoken";
 
 class UserService {
   constructor(
@@ -34,6 +36,40 @@ class UserService {
     // newUser.confirmEmailToken = otp.toString();
 
     const user = await this.UserRepository.save(newUser);
+    console.log("created service", user);
+
+    return user;
+  }
+
+  async getOne(id: string) {
+    console.log("use get one service", id);
+
+    const user = await this.UserRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    console.log("created service", user);
+
+    return user;
+  }
+
+  async getByEmail(email: string) {
+    console.log("use get one service", email);
+
+    const user = await this.UserRepository.findOne({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!user) {
+      throw AppError.NotFound(
+        "User does not exist.check your email and try again."
+      );
+    }
+
     console.log("created service", user);
 
     return user;

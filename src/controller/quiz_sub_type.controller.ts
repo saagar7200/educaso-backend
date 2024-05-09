@@ -26,6 +26,7 @@ export class QuizSubTypeController {
       const quiz_sub_types = await this.quizSubTypeService.getAll();
       return res.status(StatusCodes.OK).json({
         message: fetchedMessage("Exam sub-category"),
+        success: true,
         data: quiz_sub_types,
       });
     }
@@ -41,6 +42,7 @@ export class QuizSubTypeController {
       const quiz_sub_type = await this.quizSubTypeService.getById(id);
       return res.status(StatusCodes.OK).json({
         message: fetchedMessage("Exam sub-category "),
+        success: true,
         data: quiz_sub_type,
       });
     }
@@ -59,6 +61,7 @@ export class QuizSubTypeController {
 
       return res.status(StatusCodes.CREATED).json({
         message: createdMessage("Quiz sub-category"),
+        success: true,
         data: newQuizSubType,
       });
     }
@@ -84,6 +87,7 @@ export class QuizSubTypeController {
 
       return res.status(StatusCodes.CREATED).json({
         message: updatedMessage("Exam sub-category"),
+        success: true,
         data: updatedType,
       });
     }
@@ -99,6 +103,7 @@ export class QuizSubTypeController {
       const quiz_sub_type = await this.quizSubTypeService.delete(id);
       return res.status(StatusCodes.OK).json({
         message: deletedMessage("Exam type "),
+        success: true,
         data: quiz_sub_type,
       });
     }

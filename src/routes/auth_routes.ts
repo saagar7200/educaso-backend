@@ -2,7 +2,10 @@
 import { requestValidator } from "../middlewares/requestValidation.middleware";
 import { UserController } from "../controller/user_controller";
 import express from "express";
-import { RegisterInput } from "../validators/user/user.validator";
+import {
+  RegisterInput,
+  UserLoginInput,
+} from "../validators/user/user.validator";
 // import mediaService from "services/media/media.service";
 import { Upload } from "../middlewares/fileUpload.middleware";
 const router = express.Router();
@@ -20,9 +23,22 @@ router.post(
   requestValidator(RegisterInput),
   controller.createUser
 );
+
+router.post(
+  "/login",
+  requestValidator(UserLoginInput),
+
+  controller.login
+);
+router.post(
+  "/admin-login",
+  requestValidator(UserLoginInput),
+
+  controller.adminLogin
+);
+
 // router.post('/verify/mobile-otp', verifyMobileOtp);
 // //router.post('/verify/email-otp', verifyEmailOtp);
-// router.post('/login', loginUser);
 // router.post('/admin-login', adminLogin);
 // router.get('/all-users', authMiddleware, isAdmin, getAllUsers);
 // router.get('/:user_id', authMiddleware, getSpecificUser);

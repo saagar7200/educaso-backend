@@ -1,16 +1,16 @@
+import { QuestionInput } from "../validators/question/question.validator";
+import { QuestionController } from "../controller/question.controller";
 import { requestValidator } from "../middlewares/requestValidation.middleware";
-import { QuizSubTypeController } from "../controller/quiz_sub_type.controller";
 import express from "express";
-import { QuizSubTypeInput } from "../validators/quizsubtype/quizsubtype.validator";
-import { Role } from "../constants/global";
 import { authMiddleware } from "../middlewares/auth_middleware";
+import { Role } from "../constants/global";
 const router = express.Router();
 
-const controller = new QuizSubTypeController();
+const controller = new QuestionController();
 router.get(
   "/",
   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN, Role.USER]),
-  controller.getAllSubQuizType
+  controller.getAll
 );
 router.get(
   "/:id",
@@ -21,19 +21,19 @@ router.get(
 router.delete(
   "/:id",
   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
-  controller.deleteQuizSubType
+  controller.delete
 );
 router.put(
   "/:id",
   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
-  requestValidator(QuizSubTypeInput),
-  controller.updateQuizSubType
+  requestValidator(QuestionInput),
+  controller.update
 );
 router.post(
   "/",
   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
-  requestValidator(QuizSubTypeInput),
-  controller.createQuizSubType
+  requestValidator(QuestionInput),
+  controller.create
 );
 
 export default router;

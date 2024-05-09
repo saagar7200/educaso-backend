@@ -1,5 +1,5 @@
 import { Base } from "../../../entities/base/base.entity";
-import { Column, Entity, ManyToOne } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 import { SubjectEntity } from "../subject/subject.entity";
 import { QuestionEntity } from "../question/question.entity";
 
@@ -11,8 +11,8 @@ export class ChapterEntity extends Base {
   @Column({ name: "description", nullable: true })
   description: string;
 
-  @ManyToOne(() => QuestionEntity, (question) => question.chapter)
-  question: string;
+  @OneToMany(() => QuestionEntity, (question) => question.chapter)
+  questions: QuestionEntity[];
 
   @ManyToOne(() => SubjectEntity, (subject) => subject.chapters)
   subject: SubjectEntity;

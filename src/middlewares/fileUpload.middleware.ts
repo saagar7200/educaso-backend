@@ -1,15 +1,9 @@
 // @ts-nocheck
-import { ClassConstructor, plainToClass } from "class-transformer";
-import { ValidationError, validate } from "class-validator";
-import { NextFunction, Response, RequestHandler } from "express";
-import { STATUS } from "../constants/message.constant";
-import { fileUpload } from "express-fileupload";
+
 import path from "path";
 import fs from "fs";
 import { getTempFolderPath } from "../utils/path.util";
 import util from "util";
-import { MediaType } from "../constants/global";
-import MediaConfigurations from "types/media.config";
 
 const mkdir = util.promisify(fs.mkdir);
 const moveFile = (file, path) =>
@@ -33,13 +27,16 @@ export const Upload = <T extends object>(): RequestHandlerParams<
   return async function dynamicUpload(req, res, next) {
     // Set the base path for uploads based on user input or defaults
     const basePath = path.join(getTempFolderPath());
+    console.log("here middleware basePath", basePath);
 
     try {
       // Ensure the directory exists
-      !fs.existsSync(path.join(getTempFolderPath())) &&
-        mkdir(path.join(getTempFolderPath()), {
-          recursive: true,
-        });
+      // !fs.existsSync(path.join(getTempFolderPath())) &&
+      //   mkdir(path.join(getTempFolderPath()), {
+      //     recursive: true,
+      //   });
+      !fs.existsSync(basePath) && fs.mkdirSync(basePath, { recursive: true });
+
       // await mkdir(basePath, { recursive: true });
 
       console.log("Creating temporary", req.files);
@@ -88,7 +85,11 @@ export const Upload = <T extends object>(): RequestHandlerParams<
       next();
     } catch (err) {
       console.error("Error uploading files:", err);
-      return res.status(500).send("Failed to upload files.");
+      return res.status(500).json({
+        message: "Failed to upload files.",
+        success: false,
+        data: null,
+      });
     }
   };
 };

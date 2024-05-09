@@ -30,7 +30,9 @@ export class Media extends Base {
   @Column({ name: "mime_type" })
   mimeType: string;
 
-  @OneToOne((type) => UserEntity, (user) => user.profile_image)
+  @OneToOne((type) => UserEntity, (user) => user.profile_image, {
+    nullable: true,
+  })
   user: UserEntity;
 
   public path: string;

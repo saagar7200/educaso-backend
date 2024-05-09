@@ -1,14 +1,17 @@
 import {
-    BaseEntity,
-    BeforeUpdate,
-    Column,
-    CreateDateColumn,
-    DeleteDateColumn,
-    PrimaryGeneratedColumn,
+  BaseEntity,
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from "typeorm";
+import createUUID from "../../utils/genrateUUID";
 
 export abstract class Base extends BaseEntity {
-  @PrimaryGeneratedColumn("increment")
+  @PrimaryColumn({ primary: true, type: "uuid" })
   id: string;
 
   @CreateDateColumn({ name: "created_at" })
@@ -22,6 +25,11 @@ export abstract class Base extends BaseEntity {
 
   @DeleteDateColumn({ name: "deleted_at", nullable: true })
   deletedAt!: Date | null;
+
+  @BeforeInsert()
+  async UUID() {
+    this.id = await createUUID();
+  }
 
   @BeforeUpdate()
   async updateDate() {

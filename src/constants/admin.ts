@@ -18,6 +18,5 @@ export const admins = [
     resetToken: null,
     resetPasswordExpire: null,
     confirmEmailToken: null,
-    profileImage: null,
   },
 ];

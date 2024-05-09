@@ -55,7 +55,7 @@ async function bootStrap() {
   // static path for uploaded images
   app.use(express.static(getUploadFolderPath()));
 
-  app.use("/api/v1/user", authRouter);
+  app.use("/api/v1/auth", authRouter);
   app.use("/api/v1/exam/category", quizTypeRoute);
   app.use("/api/v1/exam/sub_category", quizsubCategoryRouter);
   app.use("/api/v1/subject", subjectRoute);

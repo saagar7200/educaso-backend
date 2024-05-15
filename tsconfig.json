@@ -23,6 +23,6 @@
     "resolveJsonModule": true
   },
 
-  "include": ["src/**/*.ts", "src/config.ts"],
+  "include": ["src/**/*.ts", "src/config.ts", "src/swagger.mjs"],
   "exclude": ["movies", "**/*.legacy.ts", "node_modules/**/*.ts"]
 }

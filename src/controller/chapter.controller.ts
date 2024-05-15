@@ -54,6 +54,7 @@ export class ChapterController {
     const subject = await this.subjectService.getById(data.subject);
     newChapter.subject = subject;
 
+
     const chapter = await newChapter.save();
 
     return res.status(StatusCodes.CREATED).json({

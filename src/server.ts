@@ -9,12 +9,12 @@ import helmet from "helmet";
 import { errorHandler, notFound } from "./middlewares/error_handler";
 import dataSource from "./config/database.config";
 import { getUploadFolderPath } from "./utils/path.util";
-import authRouter from "./routes/auth_routes";
-import quizTypeRoute from "./routes/quiztype.route";
-import quizsubCategoryRouter from "./routes/quiz_sub_type.route";
-import subjectRoute from "./routes/subject.route";
-import chapterRoute from "./routes/chapter.route";
-import questionRoute from "./routes/question.route";
+import authRouter from "./routes/auth.routes";
+import quizTypeRoute from "./routes/quiztype.routes";
+import quizsubCategoryRouter from "./routes/quiz_sub_type.routes";
+import subjectRoute from "./routes/subject.routes";
+import chapterRoute from "./routes/chapter.routes";
+import questionRoute from "./routes/question.routes";
 
 import fileUpload from "express-fileupload";
 
@@ -51,6 +51,7 @@ async function bootStrap() {
       xDownloadOptions: false,
     })
   );
+
   app.use(fileUpload());
   // static path for uploaded images
   app.use(express.static(getUploadFolderPath()));

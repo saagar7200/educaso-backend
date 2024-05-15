@@ -2,7 +2,11 @@
 // @ts-nocheck
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { createdMessage, Message } from "../constants/message.constant";
+import {
+  createdMessage,
+  fetchedMessage,
+  Message,
+} from "../constants/message.constant";
 import {
   RegisterInput,
   UserLoginInput,
@@ -22,6 +26,28 @@ export class UserController {
     private readonly bcryptService = BcryptService,
     private readonly webTokenService = WebTokenService
   ) {}
+
+  getAllUsers = asyncHandler(
+    async (req: Request, res: Response): Promise<any> => {
+      const [users, userCount] = await this.userService.getAll();
+      return res.status(StatusCodes.OK).json({
+        message: fetchedMessage("Users"),
+        success: true,
+        data: users,
+      });
+    }
+  );
+
+  getAllAdmins = asyncHandler(
+    async (req: Request, res: Response): Promise<any> => {
+      const [admins, adminCount] = await this.userService.getAllAdmins();
+      return res.status(StatusCodes.OK).json({
+        message: fetchedMessage("Admins"),
+        success: true,
+        data: admins,
+      });
+    }
+  );
 
   createUser = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
@@ -105,6 +131,9 @@ export class UserController {
       }
 
       const admin = await this.userService.getByEmail(email);
+      if (!admin) {
+        throw AppError.BadRequest("Invalid credentials");
+      }
       if (!admin.role) {
         throw AppError.Unauthorized(Message.UNAUTHORIZED_MESSAGE);
       }

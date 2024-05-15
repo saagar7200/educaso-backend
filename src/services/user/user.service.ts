@@ -5,6 +5,7 @@ import AppError from "../../utils/appError";
 import BcryptService from "../../utils/bcrypt.service";
 import { notFoundMessage } from "../../constants/message.constant";
 import jwt from "jsonwebtoken";
+import { Role } from "../../constants/global";
 
 class UserService {
   constructor(
@@ -55,6 +56,22 @@ class UserService {
     return user;
   }
 
+  async getAll() {
+    return await this.UserRepository.findAndCount({
+      where: {
+        role: Role.USER,
+      },
+    });
+  }
+
+  async getAllAdmins() {
+    return await this.UserRepository.findAndCount({
+      where: {
+        role: Role.SUPER_ADMIN || Role.ADMIN,
+      },
+    });
+  }
+
   async getByEmail(email: string) {
     console.log("use get one service", email);
 
@@ -64,11 +81,11 @@ class UserService {
       },
     });
 
-    if (!user) {
-      throw AppError.NotFound(
-        "User does not exist.check your email and try again."
-      );
-    }
+    // if (!user) {
+    //   throw AppError.NotFound(
+    //     "User does not exist.check your email and try again."
+    //   );
+    // }
 
     console.log("created service", user);
 

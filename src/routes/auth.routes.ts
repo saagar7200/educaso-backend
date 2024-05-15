@@ -8,7 +8,10 @@ import {
 } from "../validators/user/user.validator";
 // import mediaService from "services/media/media.service";
 import { Upload } from "../middlewares/fileUpload.middleware";
+import { authMiddleware } from "../middlewares/auth_middleware";
+import { Role } from "../constants/global";
 const router = express.Router();
+const allowedAdmins = [Role.ADMIN, Role.SUPER_ADMIN];
 
 // import  { createUser, loginUser, adminLogin, getAllUsers, getSpecificUser,
 //     deleteSpecificUser, updateUser, updateUserBlockStatus, logout,
@@ -31,16 +34,26 @@ router.post(
   controller.login
 );
 router.post(
-  "/admin-login",
+  "/admin/login",
   requestValidator(UserLoginInput),
 
   controller.adminLogin
+);
+router.get(
+  "/all-users",
+  authMiddleware(Object.values(Role)),
+  controller.getAllUsers
+);
+
+router.get(
+  "/all-admins",
+  authMiddleware(allowedAdmins),
+  controller.getAllAdmins
 );
 
 // router.post('/verify/mobile-otp', verifyMobileOtp);
 // //router.post('/verify/email-otp', verifyEmailOtp);
 // router.post('/admin-login', adminLogin);
-// router.get('/all-users', authMiddleware, isAdmin, getAllUsers);
 // router.get('/:user_id', authMiddleware, getSpecificUser);
 // router.delete('/:user_id', authMiddleware, isAdmin, deleteSpecificUser);
 // router.put('/update/:user_id', authMiddleware, updateUser);

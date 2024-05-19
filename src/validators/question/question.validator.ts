@@ -73,12 +73,12 @@ export class QuestionInput {
 
   @IsOptional()
   @IsArray()
-  @IsString()
+  @IsString({ each: true })
   quiz_type: string[];
 
   @IsOptional()
   @IsArray()
-  @IsString()
+  @IsString({ each: true })
   subjects: string[];
 
   @IsNotEmpty()

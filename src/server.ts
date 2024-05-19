@@ -15,6 +15,7 @@ import quizsubCategoryRouter from "./routes/quiz_sub_type.routes";
 import subjectRoute from "./routes/subject.routes";
 import chapterRoute from "./routes/chapter.routes";
 import questionRoute from "./routes/question.routes";
+import quizSetupRoute from "./routes/quiz_sub_type_subject_setup.routes";
 
 import fileUpload from "express-fileupload";
 
@@ -62,6 +63,7 @@ async function bootStrap() {
   app.use("/api/v1/subject", subjectRoute);
   app.use("/api/v1/chapter", chapterRoute);
   app.use("/api/v1/question", questionRoute);
+  app.use("/api/v1/quiz_setup", quizSetupRoute);
   // app.use("/api/quiz/category", quizCategoryRouter);
   // app.use("/api/quiz", quizRouter);
   // app.use("/api/question", questionRouter);

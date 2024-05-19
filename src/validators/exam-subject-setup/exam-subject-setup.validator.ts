@@ -7,13 +7,9 @@ import {
   Length,
   IsNotEmpty,
   IsNumber,
-  IsArray,
-  ValidateNested,
-  ArrayNotEmpty,
-  IsAlphanumeric,
 } from "class-validator";
 
-export class QuizSubTypeInput {
+export class QuizSubTypeSubjectInput {
   @IsNotEmpty()
   @IsString()
   @Length(2, 100) // Assuming names should be between 2 and 100 characters
@@ -21,33 +17,39 @@ export class QuizSubTypeInput {
 
   @IsNotEmpty()
   @IsNumber()
-  full_marks: number;
+  total_marks: number;
 
   @IsNotEmpty()
   @IsNumber()
-  exam_duration_minutes: number;
+  number_of_questions: number;
 
   @IsNotEmpty()
   @IsNumber()
-  total_questions: number;
+  number_of_long_questions: number;
 
   @IsNotEmpty()
   @IsNumber()
-  total_long_questions: number;
+  number_of_short_questions: number;
 
   @IsNotEmpty()
   @IsNumber()
-  total_short_questions: number;
+  short_questions_mark: number;
 
-  @IsArray()
-  @ArrayNotEmpty()
+  @IsNotEmpty()
+  @IsNumber()
+  long_questions_mark: number;
+
+  @IsNotEmpty()
   @IsString({ each: true })
-  quiz_type: string[];
+  quiz_type: string;
 
-  // @IsArray()
-  // @ArrayNotEmpty()
-  // @IsString({ each: true }) // Ensures each item in the array is a string
-  // subjects: string[];
+  @IsNotEmpty()
+  @IsString({ each: true })
+  quiz_sub_type: string;
+
+  @IsNotEmpty()
+  @IsString({ each: true })
+  subject: string;
 
   @IsOptional()
   @IsString()

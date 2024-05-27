@@ -44,7 +44,6 @@ class QuestionService {
     if (!question) {
       throw AppError.NotFound(notFoundMessage("exam Type"));
     }
-    console.log("created service", question);
 
     return question;
   }
@@ -126,7 +125,6 @@ class QuestionService {
     question.difficulty_level = data.difficulty_level;
     question.question_type = data.question_type;
 
-    console.log("created service", question);
     return await this.questionRepository.save(question);
   }
 

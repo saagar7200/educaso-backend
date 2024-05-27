@@ -1,8 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
 import { Base } from "../../../entities/base/base.entity";
 import { QuizType } from "../quizType/quiztype.entity";
 import { SubjectEntity } from "../subject/subject.entity";
 import { QuizSubTypeEntity } from "../quizSubType/quizsubtype.entity";
+import { QuizTypeSubjectChapterSetupEntity } from "../q_type_setup_chapter/q_type_setup_chapter.entity";
 
 @Entity()
 export class QuizTypeSubjectEntity extends Base {
@@ -33,9 +40,24 @@ export class QuizTypeSubjectEntity extends Base {
   @ManyToOne(() => QuizType, (quizType) => quizType.quiz_type_subjects)
   quiz_type: QuizType;
 
-  @ManyToOne(() => SubjectEntity, (subject) => subject.quiz_type_subjects)
+  @ManyToOne(() => SubjectEntity, (subject) => subject.quiz_type_subjects, {
+    onDelete: "CASCADE",
+  })
   subject: SubjectEntity;
 
-  @ManyToOne(() => QuizSubTypeEntity, (quizType) => quizType.quiz_type_subjects)
+  @ManyToOne(
+    () => QuizSubTypeEntity,
+    (quizType) => quizType.quiz_type_subjects,
+    {
+      onDelete: "CASCADE",
+      cascade: true,
+    }
+  )
   quiz_sub_type: QuizSubTypeEntity;
+
+  @OneToMany(
+    () => QuizTypeSubjectChapterSetupEntity,
+    (exam_chapters) => exam_chapters.exam_subject
+  )
+  exam_chapters: QuizTypeSubjectChapterSetupEntity[];
 }

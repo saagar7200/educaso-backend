@@ -44,13 +44,21 @@ export class QuizSubTypeEntity extends Base {
   })
   quiz_type: QuizType[];
 
-  @ManyToMany((type) => SubjectEntity, (sub) => sub.quiz_sub_type)
+  @ManyToMany((type) => SubjectEntity, (sub) => sub.quiz_sub_type, {
+    onDelete: "CASCADE",
+    nullable: true,
+    cascade: true,
+  })
   @JoinTable()
   subjects: SubjectEntity[];
 
   @OneToMany(
     () => QuizTypeSubjectEntity,
-    (quizTypeSubject) => quizTypeSubject.quiz_sub_type
+    (quizTypeSubject) => quizTypeSubject.quiz_sub_type,
+    {
+      nullable: true,
+      onDelete: "CASCADE",
+    }
   )
   quiz_type_subjects: QuizTypeSubjectEntity[];
 }

@@ -49,7 +49,6 @@ class SubjectService {
     if (!subject) {
       throw AppError.NotFound(notFoundMessage("exam Type"));
     }
-    console.log("created service", subject);
 
     return subject;
   }
@@ -93,7 +92,6 @@ class SubjectService {
     // subject.confirmEmailToken = otp.toString();
 
     const subject = await this.subjectRepository.save(newSubject);
-    console.log("created service", subject);
 
     return subject;
   }
@@ -120,7 +118,6 @@ class SubjectService {
       subject.description = description;
     }
 
-    console.log("created service", subject);
     return await this.subjectRepository.save(subject);
   }
 

@@ -25,7 +25,6 @@ class QuizSubTypeService {
       },
     });
 
-    console.log("created service", quizsubtypes);
 
     return quizsubtypes;
   }
@@ -76,17 +75,17 @@ class QuizSubTypeService {
     console.log("create quiztype service", data);
 
     try {
-      const existing_quiz_sub_type = await this.quizSubTypeRepository.findOne({
-        where: {
-          name: data.name,
-        },
-      });
+      // const existing_quiz_sub_type = await this.quizSubTypeRepository.findOne({
+      //   where: {
+      //     name: data.name,
+      //   },
+      // });
 
-      if (existing_quiz_sub_type) {
-        throw AppError.BadRequest(
-          `Exam type already exist with name ${data.name}`
-        );
-      }
+      // if (existing_quiz_sub_type) {
+      //   throw AppError.BadRequest(
+      //     `Exam type already exist with name ${data.name}`
+      //   );
+      // }
 
       const quiz_sub_type = new QuizSubTypeEntity();
       quiz_sub_type.name = data.name;
@@ -101,7 +100,6 @@ class QuizSubTypeService {
       // quizType.confirmEmailToken = otp.toString();
 
       const quiztype = await this.quizSubTypeRepository.save(quiz_sub_type);
-      console.log("created service", quiztype);
 
       return quiztype;
     } catch (e: any) {
@@ -161,6 +159,7 @@ class QuizSubTypeService {
       relations: {
         subjects: true,
         quiz_type: true,
+        quiz_type_subjects: true,
       },
     });
 

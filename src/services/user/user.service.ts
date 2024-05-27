@@ -37,7 +37,6 @@ class UserService {
     // newUser.confirmEmailToken = otp.toString();
 
     const user = await this.UserRepository.save(newUser);
-    console.log("created service", user);
 
     return user;
   }
@@ -51,7 +50,6 @@ class UserService {
       },
     });
 
-    console.log("created service", user);
 
     return user;
   }
@@ -87,7 +85,6 @@ class UserService {
     //   );
     // }
 
-    console.log("created service", user);
 
     return user;
   }

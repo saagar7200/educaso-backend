@@ -53,7 +53,6 @@ export class QuizSubTypeController {
       const data: QuizSubTypeInput = req.body;
       let newQuizSubType = await this.quizSubTypeService.create(data);
       const quiz_types = await this.quizTypeService.getByIds(data.quiz_type);
-      console.log("created service", quiz_types);
 
       newQuizSubType.quiz_type = quiz_types;
 

@@ -61,14 +61,17 @@ export class QuizTypeController {
     async (req: Request, res: Response): Promise<any> => {
       const id = req.params.id;
 
+      console.log("update type", id);
+
       if (!id) {
         throw AppError.BadRequest(Message.ID_NOT_PROVIDED);
       }
 
       const data: QuizTypeInput = req.body;
-      console.log("Creating quiz type", req.body);
+      console.log("update quiz type", data);
       // const quizType = await this.quizTypeService.getById(id);
       const updatedType = await this.quizTypeService.update(data, id);
+      console.log("updated quiz type", updatedType);
       return res.status(StatusCodes.CREATED).json({
         message: updatedMessage("Exam type"),
         success: true,

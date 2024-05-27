@@ -29,7 +29,6 @@ class QuizTypeService {
       },
     });
 
-    console.log("created service", quiztypes);
 
     return quiztypes;
   }
@@ -51,7 +50,6 @@ class QuizTypeService {
     if (!quiztype) {
       throw AppError.NotFound(notFoundMessage("exam Type"));
     }
-    console.log("created service", quiztype);
 
     return quiztype;
   }
@@ -94,7 +92,6 @@ class QuizTypeService {
     // quizType.confirmEmailToken = otp.toString();
 
     const quiztype = await this.quizTypeRepository.save(quizType);
-    console.log("created service", quiztype);
 
     return quiztype;
   }
@@ -107,6 +104,10 @@ class QuizTypeService {
     const quizType = await this.quizTypeRepository.findOne({
       where: {
         id: id,
+      },
+      relations: {
+        quiz_sub_types: true,
+        quiz_type_subjects: true,
       },
     });
 
@@ -121,7 +122,7 @@ class QuizTypeService {
       quizType.description = description;
     }
 
-    console.log("created service", quizType);
+    console.log("update  service", quizType);
     return await this.quizTypeRepository.save(quizType);
   }
 

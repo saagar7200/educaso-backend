@@ -43,7 +43,6 @@ class ChapterService {
     if (!chapter) {
       throw AppError.NotFound(notFoundMessage("Chapter"));
     }
-    console.log("created service", chapter);
 
     return chapter;
   }
@@ -85,7 +84,6 @@ class ChapterService {
     // subject.confirmEmailToken = otp.toString();
 
     const chapter = await this.chapterRepository.save(newChapter);
-    console.log("created service", chapter);
 
     return chapter;
   }
@@ -112,7 +110,6 @@ class ChapterService {
       chapter.description = description;
     }
 
-    console.log("created service", chapter);
     return await this.chapterRepository.save(chapter);
   }
 

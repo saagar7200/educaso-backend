@@ -6,22 +6,20 @@ import { SubjectEntity } from "../../entities/allEntities/subject/subject.entity
 import { SubjectInput } from "../../validators/subject/subject.validator";
 import { QuestionEntity } from "../../entities/allEntities/question/question.entity";
 import { QuestionInput } from "../../validators/question/question.validator";
-import { QuizTypeSubjectEntity } from "../../entities/allEntities/quizTpeSubject/quiztypesubjects.entity";
 import { QuizSubTypeSubjectInput } from "../../validators/exam-subject-setup/exam-subject-setup.validator";
+import { QuizTypeSubjectChapterSetupEntity } from "../../entities/allEntities/q_type_setup_chapter/q_type_setup_chapter.entity";
 
-class QuizAndSubjectSetup {
+class ExamAndChapterSetup {
   constructor(
     private readonly setupRepository = dataSource.getRepository(
-      QuizTypeSubjectEntity
+      QuizTypeSubjectChapterSetupEntity
     )
   ) {}
 
   async getAll() {
     const questions = await this.setupRepository.find({
       relations: {
-        subject: true,
-        quiz_sub_type: true,
-        quiz_type: true,
+        chapter: true,
       },
       order: {
         createdAt: "DESC",
@@ -37,9 +35,7 @@ class QuizAndSubjectSetup {
         id: id,
       },
       relations: {
-        subject: true,
-        quiz_sub_type: true,
-        quiz_type: true,
+        chapter: true,
       },
     });
 
@@ -55,9 +51,7 @@ class QuizAndSubjectSetup {
         id: In(id),
       },
       relations: {
-        subject: true,
-        quiz_sub_type: true,
-        quiz_type: true,
+        chapter: true,
       },
     });
 
@@ -81,15 +75,13 @@ class QuizAndSubjectSetup {
       throw AppError.BadRequest(`Setup already exist with name ${data.name}`);
     }
 
-    const newSetup = new QuizTypeSubjectEntity();
+    const newSetup = new QuizTypeSubjectChapterSetupEntity();
     newSetup.name = data.name;
     newSetup.description = data.description ?? null;
     newSetup.number_of_questions = data.number_of_questions;
     newSetup.number_of_long_questions = data.number_of_long_questions;
     newSetup.number_of_short_questions = data.number_of_short_questions;
     newSetup.total_marks = data.total_marks;
-    newSetup.short_questions_mark = data.short_questions_mark;
-    newSetup.long_questions_mark = data.long_questions_mark;
 
     const setup = await this.setupRepository.save(newSetup);
     console.log("setup service", setup);
@@ -124,8 +116,6 @@ class QuizAndSubjectSetup {
     newSetup.number_of_long_questions = data.number_of_long_questions;
     newSetup.number_of_short_questions = data.number_of_short_questions;
     newSetup.total_marks = data.total_marks;
-    newSetup.short_questions_mark = data.short_questions_mark;
-    newSetup.long_questions_mark = data.long_questions_mark;
 
     return await this.setupRepository.save(newSetup);
   }
@@ -149,4 +139,4 @@ class QuizAndSubjectSetup {
   }
 }
 
-export default new QuizAndSubjectSetup();
+export default new ExamAndChapterSetup();

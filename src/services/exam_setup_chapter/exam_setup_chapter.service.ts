@@ -8,6 +8,7 @@ import { QuestionEntity } from "../../entities/allEntities/question/question.ent
 import { QuestionInput } from "../../validators/question/question.validator";
 import { QuizSubTypeSubjectInput } from "../../validators/exam-subject-setup/exam-subject-setup.validator";
 import { QuizTypeSubjectChapterSetupEntity } from "../../entities/allEntities/q_type_setup_chapter/q_type_setup_chapter.entity";
+import { QuizSubTypeSubjectChapterInput } from "../../validators/exam-chapter-setup/exam-chapter-setup.validator";
 
 class ExamAndChapterSetup {
   constructor(
@@ -20,6 +21,7 @@ class ExamAndChapterSetup {
     const questions = await this.setupRepository.find({
       relations: {
         chapter: true,
+        exam_subject: true,
       },
       order: {
         createdAt: "DESC",
@@ -36,6 +38,7 @@ class ExamAndChapterSetup {
       },
       relations: {
         chapter: true,
+        exam_subject: true,
       },
     });
 
@@ -62,7 +65,7 @@ class ExamAndChapterSetup {
     return questions;
   }
 
-  async create(data: QuizSubTypeSubjectInput) {
+  async create(data: QuizSubTypeSubjectChapterInput) {
     console.log("subject service", data);
 
     const isquestionExists = await this.setupRepository.findOne({

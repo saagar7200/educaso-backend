@@ -19,6 +19,7 @@ import { QuestionInput } from "../validators/question/question.validator";
 import QuizTypeService from "../services/quiztype/quiztype.service";
 import QuizSubTypeService from "../services/exam_sub_type/examsubtype.service";
 import { QuizSubTypeSubjectInput } from "../validators/exam-subject-setup/exam-subject-setup.validator";
+import { QuizSubTypeSubjectChapterInput } from "../validators/exam-chapter-setup/exam-chapter-setup.validator";
 
 export class ExamChapterSetupController {
   constructor(
@@ -26,6 +27,7 @@ export class ExamChapterSetupController {
     private readonly examsetupService = ExamAndSubjectSetup,
     private readonly subjectService = SubjectService,
     private readonly quizTypeService = QuizTypeService,
+    private readonly chapterService = ChapterService,
     private readonly quizSubTypeService = QuizSubTypeService
   ) {}
 
@@ -56,13 +58,20 @@ export class ExamChapterSetupController {
 
   create = asyncHandler(async (req: Request, res: Response): Promise<any> => {
     console.log("Creating question", req.body);
-    const data: QuizSubTypeSubjectInput = req.body;
+    const data: QuizSubTypeSubjectChapterInput = req.body;
     const setup = await this.setupService.create(data);
 
-    // const subject = await this.subjectService.getById(data.subject);
-    // setup.subject = subject;
-    // const chapter = await this.chapterService.getById(data.chapter);
-    // setup.chapter = chapter;
+    if (data?.chapter) {
+      const chapter = await this.chapterService.getById(data.chapter);
+      setup.chapter = chapter;
+    }
+
+    if (data?.quiz_type_subject) {
+      const quiz_type_subject = await this.examsetupService.getById(
+        data.quiz_type_subject
+      );
+      setup.exam_subject = quiz_type_subject;
+    }
 
     // if (data.quiz_type) {
     //   const quiz_type = await this.quizTypeService.getById(data.quiz_type);

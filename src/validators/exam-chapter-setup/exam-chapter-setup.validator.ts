@@ -31,7 +31,7 @@ export class QuizSubTypeSubjectChapterInput {
 
   @IsNotEmpty()
   @IsString({ each: true })
-  quiz_type_subject_chapter: string;
+  quiz_type_subject: string;
 
   @IsNotEmpty()
   @IsString({ each: true })

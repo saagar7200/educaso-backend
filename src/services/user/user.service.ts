@@ -77,6 +77,9 @@ class UserService {
       where: {
         email: email,
       },
+      relations: {
+        profile_image: true,
+      },
     });
 
     // if (!user) {

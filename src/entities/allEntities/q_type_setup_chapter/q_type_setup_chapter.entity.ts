@@ -43,13 +43,23 @@ export class QuizTypeSubjectChapterSetupEntity extends Base {
 
   @ManyToOne(
     () => ChapterEntity,
-    (chapter) => chapter.quiz_type_subject_chapters
+    (chapter) => chapter.quiz_type_subject_chapters,
+    {
+      cascade: true,
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
+    }
   )
   chapter: ChapterEntity;
 
   @ManyToOne(
     () => QuizTypeSubjectEntity,
-    (exam_subject) => exam_subject.exam_chapters
+    (exam_subject) => exam_subject.exam_chapters,
+    {
+      cascade: true,
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
+    }
   )
   exam_subject: QuizTypeSubjectEntity;
 }

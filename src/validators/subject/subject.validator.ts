@@ -16,7 +16,7 @@ import {
 export class SubjectInput {
   @IsNotEmpty()
   @IsString()
-  @Length(2, 100) // Assuming names should be between 2 and 100 characters
+  @Length(1, 100) // Assuming names should be between 2 and 100 characters
   name: string;
 
   @IsOptional()

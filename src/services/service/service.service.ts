@@ -76,7 +76,7 @@ class Service {
 
     const deleted = await service.deleteOne();
 
-    return service;
+    return deleted;
   }
 }
 

@@ -1,4 +1,5 @@
 // @ts-nocheck
+import 'reflect-metadata'
 import express from "express";
 import cors from "cors";
 import * as dotenv from "dotenv";
@@ -10,6 +11,7 @@ import { errorHandler, notFound } from "./middlewares/error_handler";
 import dataSource, { connectDatabase } from "./config/database.config";
 import { getUploadFolderPath } from "./utils/path.util";
 import serviceRoute from './routes/service.routes'
+import testRoute from './routes/testPrep.routes'
 
 
 import fileUpload from "express-fileupload";
@@ -54,10 +56,9 @@ async function bootStrap() {
  
 
   app.use("/api/v1/service", serviceRoute);
+  app.use("/api/v1/test", testRoute);
 
-  // app.use((req, res, next) => {
-  //   res.status(404).json({ message: "Not Found" });
-  // });
+
   app.use(notFound);
   app.use(errorHandler);
   // app.use(AppError);

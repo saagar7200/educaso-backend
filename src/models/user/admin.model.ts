@@ -8,11 +8,10 @@ const adminSchema = new mongoose.Schema({
     fullName: { type: String, required: true },
     currentCity: { type: String, default: "" },
     phoneNumber: { type: String, required: true },
-   
     isEmailVerified: { type: Boolean, default: false },
     isPhoneVerified: { type: Boolean, default: false },
-    resetToken: { type: String, default: null },
-    resetPasswordExpire: { type: Date, default: null },
+    resetPasswordToken: { type: String, default: null },
+    resetPasswordExpireIn: { type: Date, default: null },
     confirmEmailToken: { type: String, default: null },
   });
 

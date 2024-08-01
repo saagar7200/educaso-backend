@@ -21,7 +21,7 @@ export class serviceController {
     private readonly mediaService = MediaService
   ) {}
 
-  getAll = asyncHandler(async (req: Request, res: Response): Promise<any> => {
+  getAll = asyncHandler(async (req: any, res: any): Promise<any> => {
     const services = await this.service.getAll();
     return res.status(StatusCodes.OK).json({
       message: fetchedMessage("service"),
@@ -32,7 +32,7 @@ export class serviceController {
   });
 
   getOneById = asyncHandler(
-    async (req: Request, res: Response): Promise<any> => {
+    async (req: any, res: any): Promise<any> => {
       const id = req.params.id;
       if (!id) {
         throw AppError.BadRequest(Message.ID_NOT_PROVIDED);
@@ -79,7 +79,7 @@ export class serviceController {
     });
   });
 
-  update = asyncHandler(async (req: Request, res: Response): Promise<any> => {
+  update = asyncHandler(async (req: any, res: any): Promise<any> => {
     const id = req.params.id;
     const data: serviceInput = req.body;
 
@@ -124,7 +124,7 @@ export class serviceController {
     });
   });
 
-  delete = asyncHandler(async (req: Request, res: Response): Promise<any> => {
+  delete = asyncHandler(async (req: any, res: any): Promise<any> => {
     const id = req.params.id;
     if (!id) {
       throw AppError.BadRequest(Message.ID_NOT_PROVIDED);

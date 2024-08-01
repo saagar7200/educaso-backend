@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import AppError from "../utils/appError";
 export const notFound = (req, res, next) => {
-  const err = new Error(`Resource Not found : ${req.method} on ${req.originalUrl}`);
+  const err = new Error(`Resource Not found :Can't ${req.method} on ${req.originalUrl}`);
   res.status(404);
   next(err);
 };
 
 export const errorHandler = (
   err: Error,
-  req: Request,
-  res: Response,
+  req: any,
+  res: any,
   next: NextFunction
 ) => {
   console.log("here call middleware ");

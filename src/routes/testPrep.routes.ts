@@ -1,13 +1,13 @@
-import { serviceInput } from "../validators/service.validator";
-import { serviceController } from "../controller/service.controller";
 import { requestValidator } from "../middlewares/requestValidation.middleware";
 import express from "express";
 import { authMiddleware } from "../middlewares/auth_middleware";
 import { Role } from "../constants/global";
 import { Upload } from "../middlewares/fileUpload.middleware";
+import { testController } from "../controller/testPreparation.controller";
+import TestInput from "../validators/testPreparation.validator";
 const router = express.Router();
 
-const controller = new serviceController();
+const controller = new testController();
 router.get(
   "/",
 //   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN, Role.USER]),
@@ -16,7 +16,7 @@ router.get(
 );
 router.get(
   "/:id",
-  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN, Role.USER]),
+//   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN, Role.USER]),
 
   controller.getOneById
 );
@@ -29,14 +29,14 @@ router.delete(
 router.put(
   "/:id",
 //   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
-  requestValidator(serviceInput),
+  requestValidator(TestInput),
   controller.update
 );
 router.post(
   "/",
   Upload(),
 //   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
-//   requestValidator(serviceInput),
+  requestValidator(TestInput),
   controller.create
 );
 

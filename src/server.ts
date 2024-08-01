@@ -51,13 +51,13 @@ async function bootStrap() {
   app.use(fileUpload());
   // static path for uploaded images
   app.use(express.static(getUploadFolderPath()));
-  app.use('/',(req,res) => {
-    res.send('server is running')
-  })
+ 
 
   app.use("/api/v1/service", serviceRoute);
 
-
+  // app.use((req, res, next) => {
+  //   res.status(404).json({ message: "Not Found" });
+  // });
   app.use(notFound);
   app.use(errorHandler);
   // app.use(AppError);

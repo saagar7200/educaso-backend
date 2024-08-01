@@ -7,6 +7,7 @@ import DotenvConfiguration from "../config/env.config";
 const userService = UserService;
 
 export const authMiddleware = (roles: string[] = []) => {
+  console.log("auth middleware", roles);
   return asyncHandler(async (req, res, next) => {
     let token;
     if (

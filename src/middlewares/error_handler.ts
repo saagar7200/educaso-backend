@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import AppError from "../utils/appError";
 export const notFound = (req, res, next) => {
-  const error = new Error(`Not found : ${req.originalUrl}`);
+  const err = new Error(`Resource Not found : ${req.method} on ${req.originalUrl}`);
   res.status(404);
-  next(error);
+  next(err);
 };
 
 export const errorHandler = (
@@ -27,7 +27,7 @@ export const errorHandler = (
     res.status(500).json({
       status: "error",
       statusCode: 500,
-      message: "Internal Server Error",
+      message: err.message ?? "Internal Server Error",
     });
   }
 };

@@ -9,7 +9,7 @@ const router = express.Router();
 const controller = new serviceController();
 router.get(
   "/",
-  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN, Role.USER]),
+//   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN, Role.USER]),
 
   controller.getAll
 );
@@ -28,13 +28,12 @@ router.delete(
 router.put(
   "/:id",
   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
-
   requestValidator(serviceInput),
   controller.update
 );
 router.post(
   "/",
-  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+//   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
   requestValidator(serviceInput),
   controller.create
 );

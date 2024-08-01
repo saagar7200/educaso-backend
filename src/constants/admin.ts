@@ -6,13 +6,12 @@ type RecursivePartial<T> = {
 
 export const admins = [
   {
-    email: "sudoadmin@quiz.com",
-    password: "MasterQuiz@321",
+    email: "sudoadmin@educaso.com",
+    password: "dmin@educaso@321",
     role: Role.SUPER_ADMIN,
     fullName: "Super Admin",
     currentCity: "",
     phoneNumber: "+9779806291760",
-    profession: "Engineer",
     isEmailVerified: true,
     isPhoneVerified: true,
     resetToken: null,

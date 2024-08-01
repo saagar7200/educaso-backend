@@ -1,26 +1,38 @@
 // @ts-nocheck
 
+import mongoose from "mongoose";
 import bcryptService from "../utils/bcrypt.service";
-import dataSource from "../config/database.config";
 import { admins } from "../constants/admin";
-import { UserEntity } from "../entities/allEntities/user/user.entity";
-import { RegisterInput } from "../validators/user/user.validator";
+import { AdminModel } from "../models/user/admin.model";
 
-dataSource
-  .initialize()
-  .then(async () => {
-    const adminRepository = dataSource.getRepository(UserEntity);
+// MongoDB connection string
+const mongoURI = process.env.DB_URI ?? '';
+
+// Connect to MongoDB
+mongoose.connect(mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", async () => {
+  console.log("Connected to MongoDB");
+
+  try {
+    // Define your User schema and model if not already defined
+;
+
     for (const el of admins) {
-      const admin = adminRepository.create(el as UserEntity);
+      const user = new AdminModel(el);
 
-      admin.password = await bcryptService.hash(el.password as string);
-      await adminRepository.save(admin);
+      user.password = await bcryptService.hash(el.password as string);
+      await user.save();
       console.info("Admin seed completed");
     }
-  })
-  .catch((err: any) => {
+  } catch (err) {
     console.error(err);
-  })
-  .finally(() => {
-    dataSource.destroy();
-  });
+  } finally {
+    db.close();
+  }
+});

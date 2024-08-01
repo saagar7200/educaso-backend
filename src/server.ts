@@ -7,16 +7,9 @@ import bodyParser from "body-parser";
 import http from "http";
 import helmet from "helmet";
 import { errorHandler, notFound } from "./middlewares/error_handler";
-import dataSource from "./config/database.config";
+import dataSource, { connectDatabase } from "./config/database.config";
 import { getUploadFolderPath } from "./utils/path.util";
-import authRouter from "./routes/auth.routes";
-import quizTypeRoute from "./routes/quiztype.routes";
-import quizsubCategoryRouter from "./routes/quiz_sub_type.routes";
-import subjectRoute from "./routes/subject.routes";
-import chapterRoute from "./routes/chapter.routes";
-import questionRoute from "./routes/question.routes";
-import quizSetupRoute from "./routes/quiz_sub_type_subject_setup.routes";
-import chapterSetupRoute from "./routes/exam-chapter.routes";
+
 
 import fileUpload from "express-fileupload";
 
@@ -38,7 +31,7 @@ async function bootStrap() {
     process.exit(1);
   });
 
-  await dataSource.initialize();
+  await connectDatabase();
 
   app.use(cors());
   app.use(morgan("dev"));
@@ -58,14 +51,8 @@ async function bootStrap() {
   // static path for uploaded images
   app.use(express.static(getUploadFolderPath()));
 
-  app.use("/api/v1/auth", authRouter);
-  app.use("/api/v1/exam/category", quizTypeRoute);
-  app.use("/api/v1/exam/sub_category", quizsubCategoryRouter);
-  app.use("/api/v1/subject", subjectRoute);
-  app.use("/api/v1/chapter", chapterRoute);
-  app.use("/api/v1/question", questionRoute);
-  app.use("/api/v1/quiz_setup", quizSetupRoute);
-  app.use("/api/v1/chapter_setup", chapterSetupRoute);
+  // app.use("/api/v1/auth", authRouter);
+
 
   app.use(notFound);
   app.use(errorHandler);

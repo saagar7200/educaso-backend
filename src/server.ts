@@ -9,6 +9,7 @@ import helmet from "helmet";
 import { errorHandler, notFound } from "./middlewares/error_handler";
 import dataSource, { connectDatabase } from "./config/database.config";
 import { getUploadFolderPath } from "./utils/path.util";
+import serviceRoute from './routes/service.routes'
 
 
 import fileUpload from "express-fileupload";
@@ -54,7 +55,7 @@ async function bootStrap() {
     res.send('server is running')
   })
 
-  // app.use("/api/v1/auth", authRouter);
+  app.use("/api/v1/service", serviceRoute);
 
 
   app.use(notFound);

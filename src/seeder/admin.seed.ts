@@ -1,17 +1,13 @@
-// @ts-nocheck
 
 import mongoose from "mongoose";
 import bcryptService from "../utils/bcrypt.service";
 import { admins } from "../constants/admin";
 import { AdminModel } from "../models/user/admin.model";
+import DotenvConfiguration from "../config/env.config";
 
-// MongoDB connection string
-const mongoURI = process.env.DB_URI ?? '';
+const mongoURI:string = DotenvConfiguration.DATABASE_URI ?? '';
 
-// Connect to MongoDB
 mongoose.connect(mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
 });
 
 const db = mongoose.connection;
@@ -20,15 +16,25 @@ db.once("open", async () => {
   console.log("Connected to MongoDB");
 
   try {
-    // Define your User schema and model if not already defined
-;
-
+    // Iterate over the admin data
     for (const el of admins) {
-      const user = new AdminModel(el);
+      const hashedPassword = await bcryptService.hash(el.password as string);
 
-      user.password = await bcryptService.hash(el.password as string);
-      await user.save();
-      console.info("Admin seed completed");
+      // Find the admin by a unique identifier, e.g., username or email
+      await AdminModel.findOneAndUpdate(
+        { email: el.email }, // Change to the unique identifier you use
+        {
+          ...el,
+          password: hashedPassword
+        },
+        {
+          upsert: true, // Create the document if it doesn't exist
+          new: true, // Return the updated document
+          setDefaultsOnInsert: true // Apply default values if creating a new document
+        }
+      );
+
+      console.info("Admin seed completed for:", el.email);
     }
   } catch (err) {
     console.error(err);

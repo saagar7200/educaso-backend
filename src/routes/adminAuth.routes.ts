@@ -2,45 +2,44 @@
 import { requestValidator } from "../middlewares/requestValidation.middleware";
 import express from "express";
 
-// import mediaService from "services/media/media.service";
 import { Upload } from "../middlewares/fileUpload.middleware";
 import { authMiddleware } from "../middlewares/auth_middleware";
 import { Role } from "../constants/global";
+import {AdminController} from "../controller/admin.controller";
+import { LoginInput } from "../validators/user.validator";
 const router = express.Router();
 const allowedAdmins = [Role.ADMIN, Role.SUPER_ADMIN];
 
 
 
-// const controller = new UserController();
+const controller = new AdminController();
 
 router.post(
   "/register",
+  authMiddleware(allowedAdmins),
   Upload(),
-  // controller.createUser
+  controller.createUser
 );
 
 router.post(
   "/login",
+  requestValidator(LoginInput),
 
-  // controller.login
+  controller.login
 );
+
 router.post(
-  "/admin/login",
-  // requestValidator(UserLoginInput),
-
-  // controller.adminLogin
-);
-router.get(
-  "/all-users",
-  authMiddleware(Object.values(Role)),
-  // controller.getAllUsers
+  "/logout",
+  controller.logout
 );
 
 router.get(
-  "/all-admins",
+  "/",
   authMiddleware(allowedAdmins),
-  // controller.getAllAdmins
+  controller.getAll
 );
+
+
 
 
 export default router;

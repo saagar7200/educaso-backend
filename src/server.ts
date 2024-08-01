@@ -5,6 +5,7 @@ import cors from "cors";
 import * as dotenv from "dotenv";
 import morgan from "morgan";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 import http from "http";
 import helmet from "helmet";
 import { errorHandler, notFound } from "./middlewares/error_handler";
@@ -12,6 +13,7 @@ import dataSource, { connectDatabase } from "./config/database.config";
 import { getUploadFolderPath } from "./utils/path.util";
 import serviceRoute from './routes/service.routes'
 import testRoute from './routes/testPrep.routes'
+import adminRoute from './routes/adminAuth.routes'
 
 
 import fileUpload from "express-fileupload";
@@ -20,6 +22,7 @@ const app = express();
 const httpServer = http.createServer(app);
 async function bootStrap() {
   dotenv.config();
+
   const HOST = process.env.APP_HOST || "localhost";
   const PORT = process.env.PORT || 3000;
 
@@ -37,6 +40,7 @@ async function bootStrap() {
   await connectDatabase();
 
   app.use(cors());
+  app.use(cookieParser());
   app.use(morgan("dev"));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
@@ -57,6 +61,7 @@ async function bootStrap() {
 
   app.use("/api/v1/service", serviceRoute);
   app.use("/api/v1/test", testRoute);
+  app.use("/api/v1/admin", adminRoute);
 
 
   app.use(notFound);

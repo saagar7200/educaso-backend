@@ -24,23 +24,20 @@ class Service {
   }
 
 
-  async create(data: serviceInput) {
+  async create(data: Omit<serviceInput ,'breadPhoto' | 'photo1' | 'photo2' >) {
 
-  
+  console.log("Creating service... service");
 
     const newService = new ServiceModel();
     newService.title = data.title;
     newService.description = data.description ?? null;
-    newService.breadPhoto = data.breadPhoto;
-    newService.photo1 = data.photo1;
-    newService.photo2 = data.photo2 ;
-    newService.info = data.info;
+    newService.info = [data.info];
     newService.conclusion = data.conclusion;
 
 
-    const service = await newService.save();
+    // const service = await newService.save();
 
-    return service;
+    return newService;
   }
 
   async update(data: serviceInput, id) {
@@ -79,7 +76,7 @@ class Service {
 
     const deleted = await service.deleteOne();
 
-    return deleted;
+    return service;
   }
 }
 

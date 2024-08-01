@@ -9,15 +9,15 @@ export class serviceInput {
   @IsNotEmpty()
   title: string;
 
-  @IsUrl()
+  // @IsUrl()
   @IsNotEmpty()
   breadPhoto: string;
 
-  @IsUrl()
+  // @IsUrl()
   @IsNotEmpty()
   photo1: string;
 
-  @IsUrl()
+  // @IsUrl()
   @IsOptional()
   photo2?: string;
 
@@ -25,10 +25,10 @@ export class serviceInput {
   @IsNotEmpty()
   description: string;
 
-  @IsArray()
+  // @IsArray()
   @IsString({ each: true })
   @IsNotEmpty({ each: true })
-  info: string[];
+  info: string;
 
   @IsString()
   @IsNotEmpty()

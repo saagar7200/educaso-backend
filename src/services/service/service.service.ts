@@ -22,84 +22,65 @@ class Service {
 
     return service;
   }
-//   async getByIds(id: string[]) {
-//     const chapters = await this.serviceRepo.find({
-//       where: {
-//         id: In(id),
-//       },
-//       relations: {
-//         questions: true,
-//         subject: true,
-//       },
-//     });
 
-//     if (!chapters) {
-//       throw AppError.NotFound(notFoundMessage("Chapter"));
-//     }
-
-//     return chapters;
-//   }
 
   async create(data: serviceInput) {
 
   
 
-    const newService = new ServiceModel(data);
+    const newService = new ServiceModel();
     newService.title = data.title;
     newService.description = data.description ?? null;
-    // const otp = generateRandomOTP();
-    // subject.confirmEmailToken = otp.toString();
+    newService.breadPhoto = data.breadPhoto;
+    newService.photo1 = data.photo1;
+    newService.photo2 = data.photo2 ;
+    newService.info = data.info;
+    newService.conclusion = data.conclusion;
 
-    const chapter = await newService.save();
 
-    return chapter;
+    const service = await newService.save();
+
+    return service;
   }
 
-//   async update(data: any, id) {
-//     console.log("chapter service", data);
+  async update(data: serviceInput, id) {
+    console.log("chapter service", data);
 
-//     const { name, description } = data;
+    const { title, description } = data;
 
-//     const chapter = await this.serviceRepo.findOne({
-//       where: {
-//         id: id,
-//       },
-//     });
+    const service = await ServiceModel.findOne(
+        {
+            _id: id,
+        }
+    );
 
-//     if (!chapter) {
-//       throw AppError.NotFound(notFoundMessage("Chapter"));
-//     }
+    if (!service) {
+      throw AppError.NotFound(notFoundMessage("service"));
+    }
 
-//     if (name !== chapter.name) {
-//       chapter.name = name;
-//     }
-//     if (description !== chapter.description) {
-//       chapter.description = description;
-//     }
+    if (title !== service.title) {
+      service.title = title;
+    }
+    if (description !== service.description) {
+      service.description = description;
+    }
 
-//     return await this.serviceRepo.save(chapter);
-//   }
+    return await service.save();
+  }
 
-//   async delete(id: string) {
-//     const chapter = await this.serviceRepo.findOne({
-//       where: {
-//         id,
-//       },
-//       relations: {
-//         questions: true,
-//         subject: true,
-//       },
-//     });
+  async delete(id: string) {
+    const service = await ServiceModel.findOne({
+        _id: id,
+    });
 
-//     if (!chapter) {
-//       throw AppError.NotFound(notFoundMessage("Chapter"));
-//     }
+    if (!service) {
+      throw AppError.NotFound(notFoundMessage("Service"));
+    }
 
-//     const deleted = await this.serviceRepo.remove(chapter);
-//     console.log("Deleted", deleted);
+    const deleted = await service.deleteOne();
 
-//     return deleted;
-//   }
+    return deleted;
+  }
 }
 
 export default new Service();

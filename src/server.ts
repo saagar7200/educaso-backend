@@ -50,6 +50,9 @@ async function bootStrap() {
   app.use(fileUpload());
   // static path for uploaded images
   app.use(express.static(getUploadFolderPath()));
+  app.use('/',(req,res) => {
+    res.send('server is running')
+  })
 
   // app.use("/api/v1/auth", authRouter);
 

@@ -7,7 +7,7 @@ import { Role } from "../constants/global";
 import { Upload } from "../middlewares/fileUpload.middleware";
 const router = express.Router();
 
-const controller = new serviceController();
+const controller:any = new serviceController();
 router.get(
   "/",
   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),

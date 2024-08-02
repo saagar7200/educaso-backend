@@ -12,7 +12,7 @@ const allowedAdmins = [Role.ADMIN, Role.SUPER_ADMIN];
 
 
 
-const controller = new AdminController();
+const controller:any = new AdminController();
 
 router.post(
   "/register",

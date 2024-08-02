@@ -1,6 +1,12 @@
-const { IsString, IsArray, IsNotEmpty, IsOptional, ValidateNested } = require('class-validator');
-const { Type } = require('class-transformer');
-const mongoose = require('mongoose');
+const {
+  IsString,
+  IsArray,
+  IsNotEmpty,
+  IsOptional,
+  ValidateNested,
+} = require("class-validator");
+const { Type } = require("class-transformer");
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 class TestFormatItem {

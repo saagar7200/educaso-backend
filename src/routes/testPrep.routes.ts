@@ -7,7 +7,7 @@ import { testController } from "../controller/testPreparation.controller";
 import TestInput from "../validators/testPreparation.validator";
 const router = express.Router();
 
-const controller = new testController();
+const controller:any = new testController();
 router.get(
   "/",
 //   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN, Role.USER]),

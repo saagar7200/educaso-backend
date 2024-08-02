@@ -47,7 +47,7 @@ export class serviceController {
     }
   );
 
-  create = asyncHandler(async (req: Request, res: Response): Promise<any> => {
+  create = asyncHandler(async (req: any, res: any): Promise<any> => {
     console.log("Creating service", req.body);
     const {breadPhoto,photo1,photo2,...data} = req.body;
     const service = await this.service.create(data);

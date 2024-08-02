@@ -14,6 +14,7 @@ import { getUploadFolderPath } from "./utils/path.util";
 import serviceRoute from './routes/service.routes'
 import testRoute from './routes/testPrep.routes'
 import adminRoute from './routes/adminAuth.routes'
+import studyAbroadRoute from './routes/studyAbroad.routes'
 
 
 import fileUpload from "express-fileupload";
@@ -62,7 +63,7 @@ async function bootStrap() {
   app.use("/api/v1/service", serviceRoute);
   app.use("/api/v1/test", testRoute);
   app.use("/api/v1/admin", adminRoute);
-
+  app.use("/api/v1/studyabroad",studyAbroadRoute)
 
   app.use(notFound);
   app.use(errorHandler);

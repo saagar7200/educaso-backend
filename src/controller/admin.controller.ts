@@ -29,7 +29,7 @@ export class AdminController {
  
 
   getAll = asyncHandler(
-    async (req: Request, res: Response): Promise<any> => {
+    async (req: any, res: any): Promise<any> => {
       const [admins, adminCount] = await this.adminService.getAll();
       return res.status(StatusCodes.OK).json({
         message: fetchedMessage("Admins"),
@@ -46,7 +46,7 @@ export class AdminController {
     }
   );
 
-  login = asyncHandler(async (req: Request, res: Response): Promise<any> => {
+  login = asyncHandler(async (req: any, res: any): Promise<any> => {
     console.log("user create", req.body);
     const { email, password, userName }: LoginInput = req.body;
 

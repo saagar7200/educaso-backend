@@ -23,7 +23,7 @@ export class testController {
     private readonly imageUploadFolder = 'tests'
   ) {}
 
-  getAll = asyncHandler(async (req: Request, res: Response): Promise<any> => {
+  getAll = asyncHandler(async (req: any, res: any): Promise<any> => {
     const TestPreparations = await this.testPreparationService.getAll();
     return res.status(StatusCodes.OK).json({
       message: fetchedMessage("Test Preparations"),
@@ -49,7 +49,7 @@ export class testController {
     }
   );
 
-  create = asyncHandler(async (req: Request, res: Response): Promise<any> => {
+  create = asyncHandler(async (req: any, res: any): Promise<any> => {
     console.log("Creating service", req.body);
     const {breadPhoto,overviewPhoto1,overviewPhoto2,registerPhoto1,registerPhoto2,...data}:TestInput = req.body;
     const testPreparation = await this.testPreparationService.create(data);
@@ -93,7 +93,7 @@ export class testController {
     });
   });
 
-  update = asyncHandler(async (req: Request, res: Response): Promise<any> => {
+  update = asyncHandler(async (req: any, res: any): Promise<any> => {
     const id = req.params.id;
     const data:  TestInput = req.body;
 
@@ -148,7 +148,7 @@ export class testController {
     });
   });
 
-  delete = asyncHandler(async (req: Request, res: Response): Promise<any> => {
+  delete = asyncHandler(async (req: any, res: any): Promise<any> => {
     const id = req.params.id;
     if (!id) {
       throw AppError.BadRequest(Message.ID_NOT_PROVIDED);

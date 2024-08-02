@@ -14,7 +14,7 @@ class Service {
   }
 
   async getById(id: string) {
-    const service = await ServiceModel.findOne({_id:id});
+    const service = await ServiceModel.findOne({ _id: id });
 
     if (!service) {
       throw AppError.NotFound(notFoundMessage("Service"));

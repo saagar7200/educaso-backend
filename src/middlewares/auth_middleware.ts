@@ -56,11 +56,11 @@ export const authMiddleware = (roles: string[] = []) => {
 };
 export const isAdmin = asyncHandler(async (req, res, next) => {
   const { email } = req.user;
-  //   const adminUser = await User.findOne({ email: email });
-  //   if (adminUser && adminUser.role === "admin") {
-  //     next();
-  //   } else {
-  //     return res.status(401).json({ message: "User is not an admin" });
-  //   }
+  const adminUser = await User.findOne({ email: email });
+  if (adminUser && adminUser.role === "admin") {
+    next();
+  } else {
+    return res.status(401).json({ message: "User is not an admin" });
+  }
   next();
 });

@@ -21,6 +21,9 @@ export class universityController {
   create = asyncHandler(async (req: any, res: any): Promise<any> => {
     const { universityPhoto, flagPhoto, ...data } = req.body;
 
+    console.log("universiry phoeo", req.files);
+    console.log({ universityPhoto });
+
     const university = await this.university.create(data);
 
     if (universityPhoto) {
@@ -86,6 +89,8 @@ export class universityController {
 
   delete = asyncHandler(async (req: any, res: any): Promise<any> => {
     const id = req.params.id;
+    console.log("id", id);
+
     if (!id) {
       throw AppError.BadRequest(Message.ID_NOT_PROVIDED);
     }
@@ -112,7 +117,7 @@ export class universityController {
     });
   });
 
-  getAll =  asyncHandler(async (req: any, res: any): Promise<any> =>{
+  getAll = asyncHandler(async (req: any, res: any): Promise<any> => {
     const university = await this.university.getAll();
     return res.status(StatusCodes.OK).json({
       message: fetchedMessage("university"),
@@ -120,7 +125,7 @@ export class universityController {
 
       data: university,
     });
-  })
+  });
 
   getOneById = asyncHandler(async (req: any, res: any): Promise<any> => {
     const id = req.params.id;
@@ -135,7 +140,4 @@ export class universityController {
       data: university,
     });
   });
-
-
-  
 }

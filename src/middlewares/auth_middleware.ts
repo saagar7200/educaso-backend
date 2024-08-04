@@ -9,6 +9,8 @@ const userService = UserService;
 export const authMiddleware: any = (roles: string[] = []) => {
   return asyncHandler(async (req, res, next) => {
     let token;
+    console.log(req.cookies["access-token"]);
+    
 
     if (req.cookies["access-token"]) {
       token = req.cookies["access-token"];

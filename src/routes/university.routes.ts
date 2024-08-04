@@ -14,14 +14,15 @@ router.post("/", Upload(), controller.create);
 
 router.put(
   "/:id",
-  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
   requestValidator(universityInput),
+  Upload(),
   controller.update
 );
 
 router.delete(
   "/:id",
-  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
 
   controller.delete
 );

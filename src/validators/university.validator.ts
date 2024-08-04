@@ -15,8 +15,8 @@ export class universityInput {
   // @IsUrl()
 
   @IsOptional()
-  universityPhoto: string;
+  universityPhoto;
   @IsOptional()
-  flagPhoto: string;
+  flagPhoto;
   // @IsUrl()
 }

@@ -43,6 +43,7 @@ async function bootStrap() {
 
   app.use(cors());
   app.use(cookieParser());
+  app.use(express.json())
   app.use(morgan("dev"));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));

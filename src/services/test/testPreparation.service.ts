@@ -3,10 +3,7 @@ import { notFoundMessage } from "../../constants/message.constant";
 import TestInput from "../../validators/testPreparation.validator";
 import { TestPreparationModel } from "../../models/test-preparation/testPreparation.model";
 
-
-
 class testPrep {
-
   async getAll() {
     const testPreps = await TestPreparationModel.find();
 
@@ -14,7 +11,7 @@ class testPrep {
   }
 
   async getById(id: string) {
-    const testPreparations = TestPreparationModel.findOne({_id:id});
+    const testPreparations = TestPreparationModel.findOne({ _id: id });
 
     if (!testPreparations) {
       throw AppError.NotFound(notFoundMessage("Test preparation"));
@@ -23,43 +20,69 @@ class testPrep {
     return testPreparations;
   }
 
-
-  async create(data: Omit<TestInput ,'breadPhoto' | 'overviewPhoto1' | 'overviewPhoto2' | 'registerPhoto1' | 'registerPhoto2' >) {
-
-  console.log("Creating testPrep... testPrep");
+  async create(
+    data: Omit<
+      TestInput,
+      | "breadPhoto"
+      | "overviewPhoto1"
+      | "overviewPhoto2"
+      | "registerPhoto1"
+      | "registerPhoto2"
+    >
+  ) {
+    console.log("Creating testPrep... testPrep");
 
     const newTest = new TestPreparationModel(data);
-    console.log('new test',newTest)
+
+    // newTest.register=data.register
+    console.log("new test", newTest);
+    console.log(typeof data.register);
 
     return newTest;
   }
 
-  async update(data: TestInput, id) {
+  async update(
+    data: Omit<
+      TestInput,
+      | "breadPhoto"
+      | "overviewPhoto1"
+      | "overviewPhoto2"
+      | "registerPhoto1"
+      | "registerPhoto2"
+    >,
+    id
+  ) {
     console.log("testPrep", data);
 
-
-    const testPrep = await TestPreparationModel.findOne(
-        {
-            _id: id,
-        }
+    const testPrep = await TestPreparationModel.findOneAndUpdate(
+      {
+        _id: id,
+      },
+      {
+        ...data,
+      },
+      {
+        new: true,
+      }
     );
 
     if (!testPrep) {
       throw AppError.NotFound(notFoundMessage("Test preparation"));
     }
 
+    return await testPrep;
+    /* 
     testPrep.overview = data.overview;
     testPrep.register = data.register;
     testPrep.testFormat = data.testFormat;
-    testPrep.faq = data.faq;
-
-
-    return await testPrep.save();
+    testPrep.faq = data.faq; */
+    
+    // return await testPrep.save();
   }
 
   async delete(id: string) {
     const testPrep = await TestPreparationModel.findOne({
-        _id: id,
+      _id: id,
     });
 
     if (!testPrep) {

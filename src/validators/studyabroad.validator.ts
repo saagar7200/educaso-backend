@@ -39,10 +39,10 @@ export class studyAbroadInput {
   @IsNotEmpty({ each: true })
   educationDialog: string;
 
-  @IsArray()
-  @IsString()
+  
+  @IsNotEmpty()
   educationList: string;
 
-  @IsBoolean()
+  @IsNotEmpty()
   isInEurope: boolean;
 }

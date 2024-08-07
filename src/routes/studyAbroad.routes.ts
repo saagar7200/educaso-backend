@@ -14,23 +14,24 @@ router.post("/", Upload(), controller.create);
 
 router.put(
   "/:id",
-    authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
-    requestValidator(studyAbroadInput),
+  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  // requestValidator(studyAbroadInput),
+  Upload(),
   controller.update
 );
 
 router.delete(
   "/:id",
-    authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
 
   controller.delete
 );
 
 router.get("/", controller.getAll);
 router.get(
-    "/:id", 
-    authMiddleware([Role.ADMIN, Role.SUPER_ADMIN, Role.USER]),
-  
-    controller.getOneById
-  );
+  "/:id",
+  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN, Role.USER]),
+
+  controller.getOneById
+);
 export default router;

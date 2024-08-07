@@ -7,35 +7,36 @@ import { Role } from "../constants/global";
 import { Upload } from "../middlewares/fileUpload.middleware";
 const router = express.Router();
 
-const controller:any = new serviceController();
+const controller: any = new serviceController();
 router.get(
   "/",
-  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
 
   controller.getAll
 );
 router.get(
   "/:id",
-  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
 
   controller.getOneById
 );
 router.delete(
   "/:id",
-  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
 
   controller.delete
 );
 router.put(
   "/:id",
-  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
-  requestValidator(serviceInput),
+  Upload(),
+  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  // requestValidator(serviceInput),
   controller.update
 );
 router.post(
   "/",
   Upload(),
-  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
   requestValidator(serviceInput),
   controller.create
 );

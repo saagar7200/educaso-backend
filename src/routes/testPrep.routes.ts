@@ -7,36 +7,37 @@ import { testController } from "../controller/testPreparation.controller";
 import TestInput from "../validators/testPreparation.validator";
 const router = express.Router();
 
-const controller:any = new testController();
+const controller: any = new testController();
 router.get(
   "/",
-//   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN, Role.USER]),
+  //   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN, Role.USER]),
 
   controller.getAll
 );
 router.get(
   "/:id",
-//   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN, Role.USER]),
+  //   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN, Role.USER]),
 
   controller.getOneById
 );
 router.delete(
   "/:id",
-//   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  //   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
 
   controller.delete
 );
 router.put(
   "/:id",
-//   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
-  requestValidator(TestInput),
+  Upload(),
+  //   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  // requestValidator(TestInput),
   controller.update
 );
 router.post(
   "/",
   Upload(),
-//   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
-  requestValidator(TestInput),
+  //   authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  // requestValidator(TestInput),
   controller.create
 );
 

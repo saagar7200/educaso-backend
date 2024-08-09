@@ -10,11 +10,13 @@ const router = express.Router();
 
 const controller: any = new studyAbroadController();
 
-router.post("/", Upload(), controller.create);
+router.post("/",
+  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  Upload(), controller.create);
 
 router.put(
   "/:id",
-  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
   // requestValidator(studyAbroadInput),
   Upload(),
   controller.update
@@ -22,7 +24,7 @@ router.put(
 
 router.delete(
   "/:id",
-  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
 
   controller.delete
 );

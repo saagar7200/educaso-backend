@@ -10,11 +10,18 @@ const router = express.Router();
 
 const controller: any = new universityController();
 
-router.post("/", Upload(), controller.create);
+router.post(
+  "/",
+
+  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+
+  Upload(),
+  controller.create
+);
 
 router.put(
   "/:id",
-  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
   requestValidator(universityInput),
   Upload(),
   controller.update
@@ -22,15 +29,20 @@ router.put(
 
 router.delete(
   "/:id",
-  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
 
   controller.delete
 );
 
-router.get("/", controller.getAll);
+router.get(
+  "/",
+  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+
+  controller.getAll
+);
 router.get(
   "/:id",
-  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN, Role.USER]),
+  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN, Role.USER]),
 
   controller.getOneById
 );

@@ -22,21 +22,21 @@ router.get(
 );
 router.delete(
   "/:id",
-  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
 
   controller.delete
 );
 router.put(
   "/:id",
   Upload(),
-  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
   // requestValidator(serviceInput),
   controller.update
 );
 router.post(
   "/",
   Upload(),
-  // authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
+  authMiddleware([Role.ADMIN, Role.SUPER_ADMIN]),
   requestValidator(serviceInput),
   controller.create
 );

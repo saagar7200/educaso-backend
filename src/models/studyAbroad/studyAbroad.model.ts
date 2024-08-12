@@ -10,6 +10,9 @@ const studyAbroadSchema = new mongoose.Schema(
     educationImage: { type: String, required: true },
     educationList: { type: [String], required: true },
     educationDialog: { type: String, required: true },
+    flagImage:{
+      type:String
+    },
     isInEurope: {
       type: Boolean,
       default: false,
